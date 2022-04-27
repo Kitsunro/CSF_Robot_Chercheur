@@ -12,9 +12,13 @@ void setup() {
     while (1);
   }
 }
+
+
 void loop() {
   recu();
 }
+
+
 
 void recu(){
   int packetSize = LoRa.parsePacket();
@@ -28,16 +32,42 @@ void recu(){
     Serial.println(message);
     lenm = message.length();
     for (int i = 0 ; i<lenm ; i++){
+      int n = 1;
+      String nombres = "";
+      while (isDigit(message.charAt(i+n))){
+        nombres.concat(message.charAt(i+n)-48);
+        n++;
+      }
+      int nombres_int = nombres.toInt();
       if ( message.charAt(i) == 'a'){
-        Serial.println("Avance");
+        if (nombres != 0){
+          Serial.println("Avance");
+          Serial.println(nombres_int);
+        }else{
+          Serial.println("Avance");
+        }
       }else if (message.charAt(i) == 'r'){
-        Serial.println("Recule");
+        if (nombres != 0){
+          Serial.println("Recule");
+          Serial.println(nombres_int);
+        }else{
+          Serial.println("Recule");
+        }
       }else if (message.charAt(i) == 'g'){
-       Serial.println("Gauche");
+        if (nombres != 0){
+          Serial.println("Gauche");
+          Serial.println(nombres_int);
+        }else{
+          Serial.println("Gauche");
+        }
       }else if (message.charAt(i) == 'd'){
-        Serial.println("Droite");
+        if (nombres != 0){
+          Serial.println("Droite");
+          Serial.println(nombres_int);
+        }else{
+          Serial.println("Droite");
+        }
       }else{
-        Serial.println("Invalide");
       }
     }
     delay(1500);
