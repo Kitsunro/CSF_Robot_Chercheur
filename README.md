@@ -4,7 +4,7 @@ Ce projet est réalisé dans le cadre de l'UE Communication Sans Fil au cours de
 
 # Description du projet
 
-Nous souhaitons contruire un ou plusieur petit robot simple, pour ensuite, arriver à les faire se déplacer sur une arène de sorte qu'ils explorent toutes l'arène en évitent qu'il ne revienne sur leurs pas.
+Nous souhaitons contruire un ou plusieur petit robot simple, pour ensuite, arriver à les faire se déplacer sur une arène de sorte qu'ils explorent toutes l'arène en évitent qu'ils ne reviennent sur leurs pas.
 
 # Matérielle nécessaire
 
