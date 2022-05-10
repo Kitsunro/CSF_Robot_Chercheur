@@ -1,9 +1,5 @@
-
 #include <SPI.h>
 #include <LoRa.h>
-//#include <String.h>
-
- 
 
 void setup()
 {
@@ -18,9 +14,12 @@ void setup()
 
 void loop()
 {
-  envoyer("a000r001d000g000", 2000);
+  String message = coord(5,3,1,0);
+  envoyer(message, 500);
 }
-void envoyer(char msg[], int delai)
+
+
+void envoyer(String msg, int delai)
 {
   LoRa.beginPacket();
   LoRa.print(msg);
@@ -41,61 +40,64 @@ void recevoir()
     while (LoRa.available() == true)
     {
       Serial.print((char)LoRa.read());
-      /*
-      char caractere = LoRa.read();
-      String msg = "" + caractere;
-      Serial.println(msg);
-      */
     }
   }
 }
 
-
-/* PARTIE EN CONSTRUCTION.
- *  NORMALEMENT CELA DEVRAIT PERMETTRE D'ENVOYER LES BONNES INSTRUCTIONS A PARTIR DES COORDONNEES
-
-void instruction(int x1, int y1, int x2, int y2)
+String coord(int x1, int y1, int x2, int y2)
 {
-  int diff_x = x1 - x2;
-  int diff_y = y1 - y2;
+  String msg = "";
+
+    if (x1 > x2)
+    {
+      msg = "" + instruction(msg, "g", 1);
+      msg = "" + instruction(msg, "a", abs(x1-x2));
+      msg = "" + instruction(msg, "d", 1);
+    }
+
+    if (x1 < x2)
+    {
+      msg = "" + instruction(msg, "d", 1);
+      msg = "" + instruction(msg, "a", abs(x1-x2));
+      msg = "" + instruction(msg, "g", 1);
+    }
+
+    if (y1 > y2)
+    {
+      msg = "" + instruction(msg, "d", 2);
+      msg = "" + instruction(msg, "a", abs(y1-y2));
+      msg = "" + instruction(msg, "d", 2);
+    }
+
+    if (y1 < y2)
+    {
+      msg = "" + instruction(msg, "a", abs(y1-y2));
+    }
+
+    if (x1 == x2 or y1 == y2)
+    {
+    }
+    
+    return msg;
+}
+
+String instruction(String msg, String action, int repeats_number)
+{
+  if (repeats_number >= 100)
+  {
+    msg = msg + action + repeats_number;
+    return msg;
+  }
   
-  diff_x = abs(diff_x);
-  diff_y = abs(diff_y);
+  else if (repeats_number >= 10)
+  {
+   msg = msg + action + "0" + repeats_number;
+   return msg;
+  }
   
-  String diff_x_s(toString(diff_x));
-  String diff_y_s(toString(diff_y));
-
-  Serial.println(diff_x_s);
-  Serial.println(diff_y_s);
-  
-  if (x1 > x2)
+  else if (repeats_number < 10)
   {
-    envoyer("a000r000d000g001", 100)
-    envoyer("a000r000d000g000", 100)
-    envoyer("a010r000d001g000", 100)
-  }
-
-  if (x1 < x2)
-  {
-    envoyer("a000r000d001g000", 100)
-    envoyer("a000r000d000g000", 100)
-    envoyer("a000r000d000g001", 100)  
-  }
-
-  if (y1 > y2)
-  {
-    envoyer("a000r000d002g000", 100)
-    envoyer("a000r000d000g000", 100)
-    envoyer("a000r000d002g000", 100)
-  }
-
-  if (y1 < y2)
-  {
-    envoyer("a000r000d000g000", 100)
-  }
-
-  else
-  {
+    msg = msg + action + "00" + repeats_number;
+    return msg;
   }
 }
-*/
