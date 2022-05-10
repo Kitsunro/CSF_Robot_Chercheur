@@ -5,7 +5,7 @@ void setup()
 
 void loop()
 {
-  String message = coord(5,2,1,1);
+  String message = coord(5,8,2,4);
   Serial.print("le message a envoyé est : ");
   Serial.println(message);
   while(1);
@@ -18,34 +18,34 @@ String coord(int x1, int y1, int x2, int y2)
     if (x1 > x2)
     {
       Serial.println("condition 1");
-      msg = msg + instruction(msg, "g", 1);
-      msg = msg + instruction(msg, "a", abs(x1-x2));
-      msg = msg + instruction(msg, "d", 1);
+      msg = "" + instruction(msg, "g", 1);
+      msg = "" + instruction(msg, "a", abs(x1-x2));
+      msg = "" + instruction(msg, "d", 1);
     }
 
-    else if (x1 < x2)
+    if (x1 < x2)
     {
       Serial.println("condition 2");
-      instruction(msg, "d", 1);
-      instruction(msg, "a", abs(x1-x2));
-      instruction(msg, "g", 1);
+      msg = "" + instruction(msg, "d", 1);
+      msg = "" + instruction(msg, "a", abs(x1-x2));
+      msg = "" + instruction(msg, "g", 1);
     }
 
-    else if (y1 > y2)
+    if (y1 > y2)
     {
       Serial.println("condition 3");
-      instruction(msg, "d", 2);
-      instruction(msg, "a", abs(y1-y2));
-      instruction(msg, "d", 2);
+      msg = "" + instruction(msg, "d", 2);
+      msg = "" + instruction(msg, "a", abs(y1-y2));
+      msg = "" + instruction(msg, "d", 2);
     }
 
-    else if (y1 < y2)
+    if (y1 < y2)
     {
       Serial.println("condition 4");
-      instruction(msg, "a", abs(y1-y2));
+      msg = "" + instruction(msg, "a", abs(y1-y2));
     }
 
-    else if (x1 == x2 or y1 == y2)
+    if (x1 == x2 or y1 == y2)
     {
       Serial.println("condition else");
     }
