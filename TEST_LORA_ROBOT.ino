@@ -4,6 +4,9 @@
 // bibliothèque pour controle servo
 #include <Servo.h>
 
+// identifiant du robot
+const String id = "RB";
+
 // on déclare deux servos (1 et 2)
 Servo servo1;
 Servo servo2;
@@ -43,25 +46,27 @@ void setup()
 void loop()
 {
   // on déclare une string qui contiendra le message recu du boitier central
-  String message = message_recu(); 
+  String message = message_recu();
 
   // dans le cas où il n'y aurait pas de message recu on met message a None
   if (message == "None")
   {
     Serial.println("Pas de message");
     Serial.println();
+    
   }
 
   // dans le cas où le message est recu
-  else
+  else if (message[0] == id[0] and message[1] == id[1])
   {
     Serial.print("message : ");
     Serial.println(message);
     Serial.println();
-    
-    for (int i=0; i<message.length(); i++)
+
+    //go_robot = false;
+    for (int i=2; i<message.length() and go_robot==false; i++)
     {
-      //Serial.println(message[i]);
+      Serial.println(message[i]);
       
      if (message[i] == 'a')
      {
@@ -89,44 +94,30 @@ void loop()
       delay(300);
      }
     }
+    go_robot=true;
   }
-    /*
-    Serial.print("message recu : ");
-    Serial.println(message);
 
-    /* le message recu est toujours sous la forme a(3 chiffres)r(3 chiffres)d(3 chiffres)g(3 chiffres)
-     *  on déclare une variable qui contient une string et on concatène les 3 chiffres qui correspondent
-     *  a l'instruction. Par exemple (ex : a003) correspondra à avancer de 3 tours. Ainsi la variable
-     *  n_avance = "003". Ensuite on convertit cette valeur en entier et on la stock dans la variable
-     *  n_avance_int. On répètera le meme procédé pour les autres instruction.
-     */
-     /*
-    String n_avance = concatenation(1,3,message);
-    int n_avance_int = n_avance.toInt();
-    String n_recule = concatenation(5,7,message);
-    int n_recule_int = n_recule.toInt();
-    String n_droite = concatenation(9,11,message);
-    int n_droite_int = n_droite.toInt();
-    String n_gauche = concatenation(13,15,message);
-    int n_gauche_int = n_gauche.toInt();
-
-  // la condition est vérifié si et seulement si go_robot est vrai, c'est à dire si le marqueur passage reste inchangé
+  if (go_robot == true)
+  {
+    delay(2000);
+    envoyer(id + "fini", 1000);
+    go_robot = false;
+  }
   
-    if (go_robot==true)
-    {
-      // on appelle les fonctions qui vont faire avancer, reculer, tourner à droite ou tourner à gauche le robot avec le nombre de tour à faire
-      avancer(n_avance_int);
-      delay(300);
-      reculer(n_recule_int);
-      delay(300);
-      tourne_droit(n_droite_int);
-      delay(300);
-      tourne_gauche(n_gauche_int);
-      delay(300);
-      go_robot = true; // on mets le marqueur de passage a false pour ne plus re-executer le déplacement. Si le marqueur reste a true on répètera le déplacement à l'infini
-    } 
-    */
+  
 }
+
+void envoyer(String msg, int delai)
+{
+  LoRa.beginPacket();
+  LoRa.print(msg);
+  LoRa.endPacket();
+  delay(delai);
+  
+  Serial.print("Sending packet: ");
+  Serial.println(msg);
+}
+
 
 // fonction pour recevoir le message du boitier
 String message_recu()
@@ -146,6 +137,10 @@ String message_recu()
       char caractere = (char)LoRa.read();
       msg.concat(String(caractere));
     }
+    /*
+    Serial.print("le message est : ");
+    Serial.println(msg);
+    */
     return msg;
   }
 
@@ -153,8 +148,7 @@ String message_recu()
   else
   {
     return "None";
-  }
-  
+  } 
 }
 
 /* fonction qui sert a concaténer certaines valeurs d'une String.
@@ -184,18 +178,20 @@ void avancer(int nombre_tour)
     // on fait faire 1 tour aux deux servos DANS LE MEME SENS (d'ou le 1 et le 189)
     servo1.write(1);
     servo2.write(189);
-    delay(780);
+    delay(quart_de_tour);
     
     // on les détache de leurs sorties respectives ce qui a pour effet de stopper la rotation
     servo1.detach();
     servo2.detach();
   }
-  //Serial.print("AVANCE DE :");
-  //Serial.println(nombre_tour);
+  Serial.print("AVANCE DE : ");
+  Serial.println(nombre_tour);
+  Serial.println();
 }
 
 void reculer(int nombre_tour)
 {
+  
   for (int i=1;i<=nombre_tour; i++)
   {
     servo1.attach(pin_servo1);
@@ -204,14 +200,15 @@ void reculer(int nombre_tour)
     // on fait faire 1 tour aux deux servos DABS LE MEME SENS (Inverse) (d'ou le 1 et le 189)
     servo1.write(189);
     servo2.write(1);
-    delay(tour_complet);
+    delay(quart_de_tour);
     
     // on les détache de leurs sorties respectives ce qui a pour effet de stopper la rotation
     servo1.detach();
     servo2.detach();
   }
-  //Serial.print("RECULE DE :");
-  //Serial.println(nombre_tour);
+  Serial.print("RECULE DE : ");
+  Serial.println(nombre_tour);
+  Serial.println();
 }
 
 
@@ -229,8 +226,9 @@ void tourne_gauche(int nombre_demi_tour)
     servo1.detach();
     servo2.detach();
   }
-  //Serial.print("TOURNE A GAUCHE DE :");
-  //Serial.println(nombre_demi_tour);
+  Serial.print("TOURNE A GAUCHE DE : ");
+  Serial.println(nombre_demi_tour);
+  Serial.println();
 }
 
 
@@ -248,6 +246,7 @@ void tourne_droit(int nombre_demi_tour)
     servo1.detach();
     servo2.detach();
   }
-  //Serial.print("TOURNE A DROITE DE :");
-  //Serial.println(nombre_demi_tour);
+  Serial.print("TOURNE A DROITE DE : ");
+  Serial.println(nombre_demi_tour);
+  Serial.println();
 }
