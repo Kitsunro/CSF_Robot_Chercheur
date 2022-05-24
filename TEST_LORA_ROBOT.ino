@@ -17,6 +17,7 @@ const int pin_servo2 = 9;
 
 // booléen qui servira de marqueur de passage dans le loop
 bool go_robot = true;
+bool start = false;
 
 // trois constances qui correspondent aux delais durant lesquelles doivent fonctionner les servos pour faire 1 tour 1/2 tour ou 1/4 de tour
 const int tour_complet = 780;
@@ -47,24 +48,22 @@ void loop()
 {
   // on déclare une string qui contiendra le message recu du boitier central
   String message = message_recu();
-
+  
   // dans le cas où il n'y aurait pas de message recu on met message a None
   if (message == "None")
   {
     Serial.println("Pas de message");
     Serial.println();
-    
   }
 
   // dans le cas où le message est recu
-  else if (message[0] == id[0] and message[1] == id[1])
+  else if (message[0] == id[0] and message[1] == id[1] and start)
   {
     go_robot = false;
     Serial.print("message : ");
     Serial.println(message);
     Serial.println();
-
-    //go_robot = false;
+    
     for (int i=2; i<message.length() and go_robot==false; i++)
     {
       Serial.println(message[i]);
@@ -99,25 +98,13 @@ void loop()
     go_robot=true;
   }
 
-  if (go_robot == true)
+  if (message == "GO" or (start and go_robot))
   {
-    envoyer(id + "fini", 600);
+    start = true;
     go_robot = false;
+    envoyer(id + "fini", 600);
   }  
 }
-
-/*
-void envoyer(String msg, int delai)
-{
-  LoRa.beginPacket();
-  LoRa.print(msg);
-  LoRa.endPacket();
-  delay(delai);
-  
-  Serial.print("Sending packet: ");
-  Serial.println(msg);
-}
-*/
 
 void envoyer(String msg, int delai)
 {

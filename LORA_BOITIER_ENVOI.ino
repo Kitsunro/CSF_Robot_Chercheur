@@ -15,7 +15,8 @@ void setup()
   {
     Serial.println("Starting LoRa failed!");
   }
-  delay(2000);
+  envoyer("GO", 500);
+  //delay(2000);
 }
 
 void loop()
@@ -54,7 +55,7 @@ void EXPLORATION()
     Serial.println(m_RA);
     Serial.println(y);
     delay(500);
-    if (y%2==0 and y<20 and m_RA == false)
+    if (y%2==0 and y<10 and m_RA == false)
     {
       Serial.println("MARQUEUR DE PASSAGE PAIR 0");
       envoyer("RA" + coord(coord_RA[0], coord_RA[1], 0, y),300);
