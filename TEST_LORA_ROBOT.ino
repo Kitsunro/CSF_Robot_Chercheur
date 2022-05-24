@@ -5,7 +5,7 @@
 #include <Servo.h>
 
 // identifiant du robot
-const String id = "RB";
+const String id = "RA";
 
 // on déclare deux servos (1 et 2)
 Servo servo1;
@@ -59,6 +59,7 @@ void loop()
   // dans le cas où le message est recu
   else if (message[0] == id[0] and message[1] == id[1])
   {
+    go_robot = false;
     Serial.print("message : ");
     Serial.println(message);
     Serial.println();
@@ -94,19 +95,18 @@ void loop()
       delay(300);
      }
     }
+    delay(1000);
     go_robot=true;
   }
 
   if (go_robot == true)
   {
-    delay(2000);
-    envoyer(id + "fini", 1000);
+    envoyer(id + "fini", 600);
     go_robot = false;
-  }
-  
-  
+  }  
 }
 
+/*
 void envoyer(String msg, int delai)
 {
   LoRa.beginPacket();
@@ -116,6 +116,25 @@ void envoyer(String msg, int delai)
   
   Serial.print("Sending packet: ");
   Serial.println(msg);
+}
+*/
+
+void envoyer(String msg, int delai)
+{
+  unsigned long Time1 = millis();
+  float past = 0;
+  
+  while (past<delai)
+  {
+    unsigned long Time2 = millis();
+    past = Time2 - Time1;
+    LoRa.beginPacket();
+    LoRa.print(msg);
+    LoRa.endPacket();
+  
+    Serial.print("Sending packet: ");
+    Serial.println(msg);
+  }
 }
 
 
