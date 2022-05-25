@@ -5,7 +5,7 @@
 #include <Servo.h>
 
 // identifiant du robot
-const String id = "RA";
+const String id = "RB";
 
 // on déclare deux servos (1 et 2)
 Servo servo1;
@@ -102,7 +102,7 @@ void loop()
   {
     start = true;
     go_robot = false;
-    envoyer(id + "fini", 800);
+    envoyer(id + "fini", 600);
   }  
 }
 
