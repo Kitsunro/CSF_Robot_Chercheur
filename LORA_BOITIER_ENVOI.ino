@@ -1,10 +1,13 @@
 #include <SPI.h>
 #include <LoRa.h>
+#include <stdlib.h>
+#include <time.h>
 
 int coord_RA[2] = {0,0};
 int coord_RB[2] = {0, 11};
 bool state_bot = false;
 int y = 0;
+int compteur_telecommand = 0;
 
 void setup()
 {
@@ -22,7 +25,10 @@ void loop()
 {
   if (state_bot == false)
   {
-    EXPLORATION();
+    //EXPLORATION();
+    //RANDOM();
+    //TELECOMMAND("RB",1,0,0,20,0);
+    envoyer("RBa003",300);
   }
 }
 
@@ -67,13 +73,14 @@ bool moove(String id1, String id2, int delai)
 
 void EXPLORATION()
 {
-  while (y<20)
+  const int repeat = 10;
+  while (y<repeat)
   {
     bool m_RA = moove("RA", "RB", 1200);
     Serial.println(m_RA);
     Serial.println(y);
     delay(500);
-    if (y%2==0 and y<20 and m_RA == false)
+    if (y%2==0 and y<repeat and m_RA == false)
     {
       Serial.println("MARQUEUR DE PASSAGE PAIR 0");
       envoyer("RA" + coord(coord_RA[0], coord_RA[1], 0, y),300);
@@ -88,7 +95,7 @@ void EXPLORATION()
       y++;
     }
 
-    else if (y%2!=0 and y<20 and m_RA == false)
+    else if (y%2!=0 and y<repeat and m_RA == false)
     {
       Serial.println("MARQUEUR DE PASSAGE IMPAIR 0");
       envoyer("RA" + coord(coord_RA[0], coord_RA[1], 10, y), 300);
@@ -105,6 +112,54 @@ void EXPLORATION()
   }
 }
 
+int alea( int a, int b)
+{
+  int n_alea ;
+  n_alea = a + (int)((float)rand() * (b-a+1) / (RAND_MAX-1)) ;
+  return n_alea;
+}
+
+void RANDOM()
+{
+  const int repeat = 10;
+  const int a = 0;
+  const int b = 20;
+  
+  while (y<repeat)
+  {
+    bool m_bots = moove("RA", "RB", 1200);
+    Serial.println(m_bots);
+    Serial.println(y);
+    delay(500);
+    
+    if (y<repeat and m_bots == false)
+    {
+      int coord_xa = alea(a,b);
+      int coord_ya = alea(a,b);
+      envoyer("RA" + coord(coord_RA[0], coord_RA[1], coord_xa, coord_ya),300);
+      coord_RA[0] = coord_xa;
+      coord_RA[1] = coord_ya;
+
+      int coord_xb = alea(a,b);
+      int coord_yb = alea(a,b);
+      envoyer("RB" + coord(coord_RB[0], coord_RB[1], coord_xb, coord_yb),300);
+      coord_RB[0] = coord_xb;
+      coord_RB[1] = coord_yb;
+
+      y++;
+    }
+  }
+}
+
+
+void TELECOMMAND(String destinataire, const int nombre_iteration, const int x1, const int y1, const int x2, const int y2)
+{
+  if (compteur_telecommand <= nombre_iteration)
+  {
+    envoyer(destinataire + coord(x1,y1,x2,y2), 300);
+    compteur_telecommand++;
+  }
+}
 
 void envoyer(String msg, int delai)
 {

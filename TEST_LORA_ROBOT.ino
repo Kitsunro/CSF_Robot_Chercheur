@@ -5,7 +5,7 @@
 #include <Servo.h>
 
 // identifiant du robot
-const String id = "RA";
+const String id = "RB";
 
 // on déclare deux servos (1 et 2)
 Servo servo1;
@@ -22,7 +22,7 @@ bool start = false;
 // trois constances qui correspondent aux delais durant lesquelles doivent fonctionner les servos pour faire 1 tour 1/2 tour ou 1/4 de tour
 const int tour_complet = 780;
 const int demi_tour = 400;
-const int quart_de_tour = 200;
+const int quart_de_tour = 250;
 
 void setup()
 { 
@@ -46,6 +46,9 @@ void setup()
 
 void loop()
 {
+  digitalWrite(pin_servo1, LOW);
+  digitalWrite(pin_servo2, LOW);
+  
   // on déclare une string qui contiendra le message recu du boitier central
   String message = message_recu();
   
@@ -180,12 +183,16 @@ void avancer(int nombre_tour)
     // on attache les moteurs 1 et 2 à leurs sorties respectives pour lancer la rotation
     servo1.attach(pin_servo1);
     servo2.attach(pin_servo2);
-    
-    // on fait faire 1 tour aux deux servos DANS LE MEME SENS (d'ou le 1 et le 189)
+
+    // on fait faire 1 quart de tour aux deux servos DANS LE MEME SENS (d'ou le 1 et le 189)
+    servo1.writeMicroseconds(quart_de_tour);
+    servo2.writeMicroseconds(-250);
+    //delay(quart_de_tour);
+/*
     servo1.write(1);
-    servo2.write(189);
+    servo2.write(179);
     delay(quart_de_tour);
-    
+*/   
     // on les détache de leurs sorties respectives ce qui a pour effet de stopper la rotation
     servo1.detach();
     servo2.detach();

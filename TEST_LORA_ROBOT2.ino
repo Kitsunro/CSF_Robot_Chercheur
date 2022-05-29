@@ -41,6 +41,9 @@ void setup()
   // on attache les deux servos aux pins qui leur correspondent
   servo1.attach(pin_servo1);
   servo2.attach(pin_servo2);
+
+  digitalWrite(pin_servo1, LOW);
+  digitalWrite(pin_servo2, LOW);
 }
 
 
