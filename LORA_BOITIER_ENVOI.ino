@@ -3,7 +3,7 @@
 
 int coord_RA[2] = {0,0};
 int coord_RB[2] = {0, 11};
-bool state_RA = false;
+bool state_bot = false;
 int y = 0;
 
 void setup()
@@ -16,46 +16,64 @@ void setup()
     Serial.println("Starting LoRa failed!");
   }
   envoyer("GO", 500);
-  //delay(2000);
 }
 
 void loop()
 {
-  if (state_RA == false)
+  if (state_bot == false)
   {
     EXPLORATION();
   }
 }
 
 
-bool moove(String id_bot)
+bool moove(String id1, String id2, int delai)
 {
-  String notif_fin = message_recu();
+  unsigned long Time1 = millis();
+  float past = 0;
+  bool state_id1;
+  bool state_id2;
   
-  Serial.print("message_notif dans le moove : ");
-  Serial.println(notif_fin);
-  
-  if (notif_fin == id_bot + "fini")
+  while (past<delai)
   {
-    state_RA = false;
-  }
+    unsigned long Time2 = millis();
+    past = Time2 - Time1;
+    
+    String notif_fin = message_recu();
+    Serial.println();
+    Serial.print("message_notif dans le moove                       : ");
+    Serial.println(notif_fin);
 
-  else
-  {
-    state_RA = true;
+    if (notif_fin == id1 + "fini")
+    {
+      state_id1 = false;
+    }
+
+    if (notif_fin == id2 + "fini")
+    {
+      state_id2 = false;
+    }
+
+    else
+    {
+      state_id1 = true;
+      state_id2 = true;
+    }
+
+    return state_id1 or state_id2;
   }
-  return state_RA;
 }
+
 
 void EXPLORATION()
 {
   while (y<20)
   {
-    bool m_RA = moove("RA");
+    bool m_RA = moove("RA", "RB", 1200);
     Serial.println(m_RA);
     Serial.println(y);
     delay(500);
-    if (y%2==0 and y<10 and m_RA == false)
+    if (y%2==0 and y<20 and m_RA == false)
     {
       Serial.println("MARQUEUR DE PASSAGE PAIR 0");
       envoyer("RA" + coord(coord_RA[0], coord_RA[1], 0, y),300);
@@ -86,6 +104,7 @@ void EXPLORATION()
     }
   }
 }
+
 
 void envoyer(String msg, int delai)
 {
@@ -169,7 +188,7 @@ String coord(int x1, int y1, int x2, int y2)
     if (x1 == x2 and y1 == y2)
     {
     }
-    
+
     return msg;
 }
 
