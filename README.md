@@ -28,4 +28,4 @@ Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le 
 ### Construction des robots
 #### Etape 1 :
 Commençons par imprimer en 3d le modèle du boitier qui acceuillera les robots par la suite.
-Pour cela, vous pouvez télécharger le modèle 3d présent sur le github ou confectionner le votre.
+Pour cela, vous pouvez télécharger le [modèle 3d](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/Boitier1.STL) présent sur le github ou confectionner le votre.
