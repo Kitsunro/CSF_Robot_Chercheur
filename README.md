@@ -47,11 +47,22 @@ Une fois que les servos sont collés, il faut viser les roues. Attention, ne for
 
 #### Etape 3 :
 Nous allons maintenent coder les robots et le boitier de contrôle. C'est ici que réside le gros du travail mais pas de panique, nous allons détaillé tout ça, pas à pas.
+Nous voulons être en mesure de commander deux robots identiques avec un boitier. Ces robots vont évoluer (par soucis de simplicité) dans une zone d'1 mètre carré quadrillée d'un repère orthonormé où 1 unité vaut 5cm.
+Ainsi, les robots se déplaceront d'une point A vers un point B. **Nous tenons là notre premier objectif, il nous faut être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'une point B dans le boitier, puis d"envoyer ces instructions aux robots lorsque celà sont immobiles.**
 
-`#include <SPI.h>
-#include <LoRa.h>
-#include <stdlib.h>
-#include <time.h>`
+Pour résoudre ce problème nous allons mettre en place plusieurs fonctions que j'expliquerait plutard, mais déjà initialisation la communication des cartes avec le programmes ci-dessous que l'on va mettre dans le `setup` :
+- dans le code du boitier
+`void setup()`
+`{`
+  `Serial.begin(9600);`
+  `Serial.println("LoRa Sender");`
+  
+  `if (!LoRa.begin(915E6))`
+ `{`
+    `Serial.println("Starting LoRa failed!");``
+  }`
+`}`
 
-Ici on importe toutes les librairies dont on va avoir besoin.
+
+
 
