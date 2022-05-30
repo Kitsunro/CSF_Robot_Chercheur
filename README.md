@@ -11,4 +11,6 @@ Nous souhaitons contruire un ou plusieur petit robot simple, pour ensuite, arriv
 #### Pour un robot:
 - Carte [UCA](https://github.com/FabienFerrero/UCA21)
 - 2 Servomoteur [FS90R](https://www.gotronic.fr/art-servomoteur-fs90r-25838.htm)
-- Imprimer le corps et les roues sous impression 3D
+- Boitier imprimer en 3d
+- [Roues pour les servomoteurs](https://www.gotronic.fr/art-roue-pour-servomoteur-fs90r-25856.htm)
+- fils de connexions
