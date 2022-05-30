@@ -39,7 +39,19 @@ Commençons l'assemblage.
 - de la colle (je vous conseille [celle-ci](https://www.cdiscount.com/telephonie/accessoires-portable-gsm/tubes-de-colle-glue-adhesif-b-7000-15-ml-vitre-cha/f-1442034-auc2009365374519.html?idOffre=1094297931#mpos=0|mp) qui fonctionne très bien avec le plastique)
 - un tourne vis cruciforme pour fixer les roues aux servomoteurs
 
-Nous allons commencer par coller les deux servomoteurs FS90R sur les deux emplacements (de chaque côté du boitier) prévu à cette effet. La tête du servomoteur passe par le trou. Nous vesserons les roues une fois la colle séché.
-![Les deux excroissances sur les côtés entourées en rouge restent à l'interieure du boitier.](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/servo_roue_modifi%C3%A9.jpg)
+Nous allons commencer par coller les deux servomoteurs FS90R sur les deux emplacements (de chaque côté du boitier) prévu à cette effet. La tête du servomoteur passe par le trou. Nous vesserons les roues une fois la colle séché. Les deux excroissances sur les côtés entourées en rouge restent à l'interieure du boitier.
+![](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/servo_roue_modifi%C3%A9.jpg)
 
+Une fois que les servos sont collés, il faut viser les roues. Attention, ne forcez pas trop pour viser, vous risquez de decoller le servos du support.
+##### Voilà ! Vous avez un robt prêt à être programmé. Nous allons donc pouvoir passer à cette deuxième partie : le code.
+
+#### Etape 3 :
+Nous allons maintenent coder les robots et le boitier de contrôle. C'est ici que réside le gros du travail mais pas de panique, nous allons détaillé tout ça, pas à pas.
+
+`#include <SPI.h>
+#include <LoRa.h>
+#include <stdlib.h>
+#include <time.h>`
+
+Ici on importe toutes les librairies dont on va avoir besoin.
 
