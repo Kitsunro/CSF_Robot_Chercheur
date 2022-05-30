@@ -52,17 +52,18 @@ Ainsi, les robots se déplaceront d'une point A vers un point B. **Nous tenons l
 
 Pour résoudre ce problème nous allons mettre en place plusieurs fonctions que j'expliquerait plutard, mais déjà initialisation la communication des cartes avec le programmes ci-dessous que l'on va mettre dans le `setup` :
 - dans le code du boitier
-`void setup()`
-`{`
-  `Serial.begin(9600);`
-  `Serial.println("LoRa Sender");`
-  
-  `if (!LoRa.begin(915E6))`
- `{`
-    `Serial.println("Starting LoRa failed!");``
-  }`
-`}`
 
+<pre><code>
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("LoRa Sender");
+  
+  if (!LoRa.begin(915E6))
+  {
+    Serial.println("Starting LoRa failed!");
+  }
+}</code></pre>
 
 
 
