@@ -37,5 +37,8 @@ Je précise que vous pouvez construire autant de robots que vous le voulez, le p
 Commençons l'assemblage.
 #### Pour cette assamblage il vous faudra un peu de matériel :
 - de la colle (je vous conseille [celle-ci](https://www.cdiscount.com/telephonie/accessoires-portable-gsm/tubes-de-colle-glue-adhesif-b-7000-15-ml-vitre-cha/f-1442034-auc2009365374519.html?idOffre=1094297931#mpos=0|mp) qui fonctionne très bien avec le plastique)
+- un tourne vis cruciforme pour fixer les roues aux servomoteurs
+
+Nous allons commencer par coller les deux servomoteurs FS90R sur les deux emplacements (de chaque côté du boitier) prévu à cette effet. La tête du servomoteur passe par le trou.
 
 
