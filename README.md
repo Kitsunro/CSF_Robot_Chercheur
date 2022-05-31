@@ -61,12 +61,14 @@ Maintenant que vous avez la bonne library, nous allons pouvoir commencer à prog
 <br/>**Maintenant, commençons à coder !**
 
 On commence par le programme du **boitier**. Dans un premier temps, il nous faut importer toutes les bibliothèques dont on va avoir besoin.
-<pre>
+<pre><code>
+
 #include <SPI.h>
 #include <LoRa.h>
 #include <stdlib.h>
 #include <time.h>
-</pre>
+
+</code></pre>
 
 
 
