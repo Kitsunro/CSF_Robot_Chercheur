@@ -50,20 +50,12 @@ Nous allons maintenent coder les robots et le boitier de contrôle. C'est ici qu
 Nous voulons être en mesure de commander deux robots identiques avec un boitier. Ces robots vont évoluer (par soucis de simplicité) dans une zone d'1 mètre carré quadrillée d'un repère orthonormé où 1 unité vaut 5cm.
 Ainsi, les robots se déplaceront d'une point A vers un point B. **Nous tenons là notre premier objectif, il nous faut être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'une point B dans le boitier, puis d"envoyer ces instructions aux robots lorsque celà sont immobiles.**
 
-Pour résoudre ce problème nous allons mettre en place plusieurs fonctions que j'expliquerait plutard, mais déjà initialisation la communication des cartes avec le programmes ci-dessous que l'on va mettre dans le `setup` :
-- dans le code du boitier
+Pour résoudre ce problème nous allons mettre en place plusieurs fonctions que j'expliquerait plutard.
+##### On commence par détailler le code du boitier. Certains bout de code ne sont compréhensible qu'en ayant connaissance du programme des robots, dans le cas échéant j'essairai d'expliquer au mieux le pourquoi du comment, mais tout s'éclaircira avec le programme des robots que l'on expliquera plus bas.
 
-<pre><code>
-void setup()
-{
-  Serial.begin(9600);
-  Serial.println("LoRa Sender");
-  
-  if (!LoRa.begin(915E6))
-  {
-    Serial.println("Starting LoRa failed!");
-  }
-}</code></pre>
+Après avoir créer votre nouveau fichier .ino, vous allez dans un premier temps configurer la communication entre les cartes.
+Nous allons utiliser la technologie LoRa *(et non LoRaWAN qui est un protocole bien spécifique de communication LoRa)*. Pour se faire, il vous faudra télécharger la bibliothèque (library en anglais) [LoRa](https://www.arduino.cc/reference/en/libraries/lora/). Télécharger la version 0.8.0 (la dernière au moment de ce *tuto*.
+
 
 
 
