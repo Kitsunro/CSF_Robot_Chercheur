@@ -60,10 +60,10 @@ Vous avez normalement un dossier .zip, il faudra en extraire les fichiers dans l
 Maintenant que vous avez la bonne library, nous allons pouvoir commencer à programmer. Si vous utiliser (comme moi) la carte UCA, sachez qu'il vous faudra configurer votre IDE Arduino pour pouvoir l'utiliser. Dans ce cas, je vous renvoi vers [cette page Github](https://github.com/FabienFerrero/UCA21) qui explique comment faire.
 <br/>**Maintenant, commençons à coder !**
 
-On commence par le programme du **boitier**. Dans un premier temps, il nous faut importer toutes les bibliothèques dont on va avoir besoin.
-`#include <SPI.h>`
-`#include <LoRa.h>`
-`#include <stdlib.h>`
-`#include <time.h>`
+On commence par le programme du **boitier**. Dans un premier temps, il nous faut importer toutes les bibliothèques dont on va avoir besoin :
+- `#include <SPI.h>`
+- `#include <LoRa.h>`
+- `#include <stdlib.h>`
+- `#include <time.h>`
 
 
