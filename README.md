@@ -69,14 +69,40 @@ On commence par le programme du **boitier**. Dans un premier temps, il nous faut
 Les deux premières bibliothèques servent à la communication LoRa, le troisième proposent des fonctions qui nous seront utiles pour convertir des types particulier ou générer des nombres aléatoires et la dernière, `time.h`, sert à gérer le temps, comme son nom l'indique. Bien sûr, si vous voulez rajouter des fonctionnalités particulières ou des capteurs, vous pouvez rajouter des biblithèques comme vous le souhaitez, les possibilités sont infinies.
 
 Passons à la suite de notre programme qui pour l'instant ne fait pas grand chose d'intéressant. On va déclarer plusieurs variables qui nous seront bien utile par la suite. Je ne vais pas entrer tout de suite dans le détail de chacunes mais ça va venir.
-<pre><code>
-  
-//coordonnées de RA, RB dans un tableau
+<pre><code>//coordonnées de RA, RB dans un tableau
 int coord_RA[2] = {0,0};
 int coord_RB[2] = {0, 11};
 
 bool state_bot = false;
 int y = 0;
-int compteur_telecommand = 0;
+int compteur_telecommand = 0;</code></pre>
+
+C'est bon, une fois toutes les déclarations faites nous allons pouvoir entrer dans le vif du sujet : le `setup`.
+Ici le but est de configurer la communication Lora. C'est là que nous allons indiquer la fréquence que l'on va utiliser, initialiser le `Serial` (qui nous sera très utile ensuite pour comprendre ce qui se passe) et gérer les erreurs de connexion sur lesquels on pourrait tomber. Encore une fois, je ne vais pas entrer dans le détail du fonctionnement, mais rien de sorcier, on ne fait que réutiliser la syntaxe des exemble *LoRa Sender* et *LoRa Receiver* de la bibliothèque que l'on a téléchargé plus haut.
+<pre><code>void setup()
+{
+  Serial.begin(9600);
+  Serial.println("LoRa Sender");
   
-  </code></pre>
+  if (!LoRa.begin(915E6))
+  {
+    Serial.println("Starting LoRa failed!");
+  }
+  Serial.println("Test");
+  envoyer("GO", 500);
+}</pre></code>
+
+Le `loop`, autrement dit la boucle infinie que va exécuter la carte est extrêment simple. On va seulement appeler les différentes fonctionnalités que l'on a programmer dans les fonctions que nous allons détailler par la suite. Je vous mets quand même le programme en bas pour montrer de quoi ça à l'air mais il n'y a rien de particulier à comprendre.
+<pre><code>void loop()
+{
+  if (state_bot == false)
+  {
+    //EXPLORATION();
+    //RANDOM();
+    //TELECOMMAND("RA",1,0,0,20,0);
+  }
+}</pre></code>
+
+Vous pouvez voir les trois fonctionnalités `EXPLORATION` `RANDOM` et `TELECOMMAND`. **Elles sont toutes les trois en commentaire donc si vous lancer le programme tel quel, rien ne se passera**.
+
+##### Nous venons de voir toutes la partie *initialisation* du programme du boitier
