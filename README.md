@@ -66,4 +66,17 @@ On commence par le programme du **boitier**. Dans un premier temps, il nous faut
 - `#include <stdlib.h>`
 - `#include <time.h>`
 
+Les deux premières bibliothèques servent à la communication LoRa, le troisième proposent des fonctions qui nous seront utiles pour convertir des types particulier ou générer des nombres aléatoires et la dernière, `time.h`, sert à gérer le temps, comme son nom l'indique. Bien sûr, si vous voulez rajouter des fonctionnalités particulières ou des capteurs, vous pouvez rajouter des biblithèques comme vous le souhaitez, les possibilités sont infinies.
 
+Passons à la suite de notre programme qui pour l'instant ne fait pas grand chose d'intéressant. On va déclarer plusieurs variables qui nous seront bien utile par la suite. Je ne vais pas entrer tout de suite dans le détail de chacunes mais ça va venir.
+<pre><code>
+  
+//coordonnées de RA, RB dans un tableau
+int coord_RA[2] = {0,0};
+int coord_RB[2] = {0, 11};
+
+bool state_bot = false;
+int y = 0;
+int compteur_telecommand = 0;
+  
+  </code></pre>
