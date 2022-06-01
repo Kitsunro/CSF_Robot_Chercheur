@@ -119,7 +119,7 @@ Pour faire celà, il faut répondre à plusieurs questions au préalable :
 3. Sous quelle forme les instructions doivent-elles être envoyés aux robots ?
 4. Comment être au courant que les robots sont immobiles et ainsi que les informations peuvent être envoyées ?
 
-### Commençons par répondre à la première question.
+#### Commençons par répondre à la première question.
 Dans un premier temps, on pourrait dire que par soucis d'efficacité les robots vont se déplacer en lignes droites du point de départ jusqu'au point d'arrivé. Cependant, ça soulève un problème : il faudra gérer des angles et des calculs trigonométriques qui vont complexifier l'instruction à envoyé.
 Il existe une autre solution plus rapide et plus simple à mettre en place : un déplacement en escalier.
 Dans ce cas, la seule information à connaitre est la valeur absolu de la différence entre l'abscice du point A et du point B et la valeur absolu de la différence entre l'ordonnée du point A et du point B. Les robots se déplaceront donc selon cette logique :
