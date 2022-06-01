@@ -537,7 +537,7 @@ const int quart_de_tour = 250;
     Serial.println();
 
     // pour chaque caractère du message et tant que le booléen go_robot est faux
-    for (int i=2; i<message.length() and go_robot==false; i++)
+    for (int i=2; i < message.length() and go_robot==false; i++)
     {
       Serial.println(message[i]);
 
@@ -579,7 +579,11 @@ const int quart_de_tour = 250;
      */
     delay(1000);
     go_robot=true;
-  }
-      </pre></code>
+  }</pre></code>
 
-  
+<br/>L'utilité de la variable `id` devrait normalement être plus claire désormais. On va regarder si les deux premiers caractère du message reçu correspondent bien à l'`id` du robot : si c'est le cas, alors le message est belle et bien pour ce robot.
+<br/>Pour l'execution des instructions, elle se fait grâce à l'utilisation de deux fonctions que je n'ai pas encore décrit :
+-  d'abord `concatenation()` que je vais décrire juste après
+- puis par les fonctions dites de *contrôle des moteurs* (c'est à dire ou `avancer()`, ou `tourne_droit()` ou `tourne-gauche()`)
+
+<br/>
