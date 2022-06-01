@@ -94,6 +94,67 @@ Ici le but est de configurer la communication Lora. C'est là que nous allons in
   envoyer("GO", 500);
 }</pre></code>
 
+Plus tard, nous aurons besoin d'envoyer et de recevoir des messages (je m'étendrai plus bas sur les protocoles de communication LoRa, pour l'instant considérons que l'on reçoit et que l'on envoie des chaines de caractères).
+<br/> Pour faire cela, nous nous baserons sur les exemples *LoRaSender* et *LoRaReceiver* dont j'ai déjà parlé plus haut. Il y a cependant une différence majeure avec ces exemples. Etant donné que l'entiereté de notre système émet sur la même fréquence (ce qui est la plus grosse contrainte du projet), pour limiter les interférences nous enverrons les instructions par packets.
+<br/> Pour se faire, nous utiliserons la fonction `millis()`. Cette fonction, incluse dans le langage Arduino, retourne **le nombre de millisecondes écoulés depuis l'exécution du programme dans la carte**. Ça donne ça :
+
+<pre><code>void envoyer(String msg, int delai)
+{
+  unsigned long Time1 = millis();
+  float past = 0;
+  
+  while (past<delai)
+  {
+    unsigned long Time2 = millis();
+    past = Time2 - Time1;
+    LoRa.beginPacket();
+    LoRa.print(msg);
+    LoRa.endPacket();
+  
+    Serial.print("Sending packet: ");
+    Serial.println(msg);
+  }
+}
+</pre></code>
+
+On remarque que la fonction prend 2 paramètres :
+- `String msg` qui n'est autre que la chaine de caractère à envoyer
+- `int delai` qui correspond au temps durant lequel on va envoyer des packets (`LoRa.beginPacket();`)
+
+<br/> Pour recevoir des messages c'est encore plus simple : on reprend le code de l'exemple *LoRaReceiver*. Je ne vais pas l'expliquer ici, je vous laisse le soin de consulter les commentaires de la fonction.
+
+<pre><code>String message_recu()
+{
+  // test si il y a un packet (message) qui est recu
+  int packetSize = LoRa.parsePacket();
+  delay(100);
+  if (packetSize)
+  {
+    /* on défini une variable msg qui contiendra le message recu. Tant que le message n'est pas fini,
+     * on ajoute la variable caractère (qui contient l'un après l'autre tous les caractères du message recu)
+     * à la variable msg grace a la fonction concat.
+     */
+    String msg = "";
+    while (LoRa.available())
+    {
+      char caractere = (char)LoRa.read();
+      msg.concat(String(caractere));
+    }
+    
+    Serial.print("le message est : ");
+    Serial.println(msg);
+    
+    return msg;
+  }
+
+  // si il n'y a pas de packet recu alors on fixe le msg à None
+  else
+  {
+    return "None";
+  } 
+}
+</pre></code>
+
 Le `loop`, autrement dit la boucle infinie que va exécuter la carte est extrêment simple. On va seulement appeler les différentes fonctionnalités que l'on a programmer dans les fonctions que nous allons détailler par la suite. Je vous mets quand même le programme en bas pour montrer de quoi ça à l'air mais il n'y a rien de particulier à comprendre.
 <br/>Vous vous demandez peut-être à quoi sert la ligne `envoyer("GO", 500);`. C'est typiquement une partie compliqué à comprendre sans connaître le code des robots mais pour ne pas vous laissez complètement dans le brouillard, le boitier va envoyer "GO" au deux robots, ce qui leurs signalera que celui-ci est lancé et que le *jeu* commence. Ce sera en quelque sorte l'élément déclancheur qui permettra aux robots de rentrer par la suite dans les différentes boucles qui les feront fonctionner.
 <pre><code>void loop()
