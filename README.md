@@ -283,8 +283,7 @@ bool moove(String id1, String id2, int delai)
 }
 </pre></code>
 
-Voilà ! Notre objectif est enfin atteint, nous sommes capable de calculer des instructions de déplacement à partir des coordonnées d'un point A et d'un point B dans le boitier, puis d'envoyer ces instructions aux robots lorsque cela sont immobiles.
-
+</br> **Voilà ! Notre objectif est enfin atteint, nous sommes capable de calculer des instructions de déplacement à partir des coordonnées d'un point A et d'un point B dans le boitier, puis d'envoyer ces instructions aux robots lorsque cela sont immobiles.**
 </br> J'attire votre attention sur le fait que c'est bien dans le boitier que nous faisons les calculs. Les robots ne font qu'exécuter les instructions qu'ils reçoiovent.
 </br> Désormais, il va être bien plus simple et plus *propre* de programmer les fonctionnalités de nos robots.
 #### Commençons par la plus simple des 3 : `TELECOMMAND()`
