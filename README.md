@@ -464,6 +464,46 @@ int alea( int a, int b)
   return n_alea;
 }</pre></code>
 
-### Conclusion
+### Conclusion du programme du boitier et Introduction à celui des robots
 Nous venons de voir comment programmer le boitier central. Cependant il nous reste à comprendre comment faire pour que les deux robots soient en mesure d'exécuter correctement les instructions qu'ils reçoivent.
-<br/>
+<br/>Les deux robots ont des programmes quasi-similaire. Je dis *quasi* parce que la seule différence entre le programme du *robot A* et et *robot B* est la variable `String id` qui détermine *l'identifiant* du robot : c'est à dire `"RA"` ou bien `"RB"`.
+<br/>Mais nous reviendrons là-dessu apès avoir parlé des **bibliothèques importées** pour se programme.
+<br/>*Nous allons nous concentrer sur le robot A mais soyez que conscient que tous ce qui est vrai pour l'un l'est aussi pour l'autre.*
+
+<br/>Les bibliothèques utilisées sont les mêmes que pour le boitier à l'exeption que nosu n'utiliserons pas `<stdlib.h>` et `<time.h>` et que l'on rajoute la bibliothèque (elle aussi incluse de base dans l'IDE Arduino) `<Servo.h>`. Nous avons donc :
+- `#include <SPI.h>`
+- `#include <LoRa.h>`
+- `#include <Servo.h>`
+
+Maintenant, on va voir les déclaration de variables. Comme pour le programme du boitier, cette partie du code est compliqué à comprendre sans connaitre ce qui vient après.
+<br/>C'est pourquoi je ne vais pas ralonger ce *tuto* avec des explications facultatites; je vous laisse avec les commentaires.
+
+<pre><code>// identifiant du robot
+const String id = "RA";
+
+// on déclare deux servos (1 et 2)
+Servo servo1;
+Servo servo2;
+
+// deux constantes pour définir les pins des servos (attentions certains pins sont réservés à la communication LoRa)
+const int pin_servo1 = 5;
+const int pin_servo2 = 9;
+
+// booléen qui servira de marqueur de passage dans le loop
+bool go_robot = true;
+bool start = false;
+
+// trois constances qui correspondent aux delais durant lesquelles doivent fonctionner les servos pour faire 1 tour 1/2 tour ou 1/4 de tour
+const int tour_complet = 780;
+const int demi_tour = 400;
+const int quart_de_tour = 250;
+</pre></code>
+
+<br/>**Le `setup()`, les fonction `envoyer()` et `message_recu()` sont identiques en tout point à celle du boitier** on va donc passer au coeur du programme : le `loop()`.
+
+<br/> Alors que le `loop()` du boitier était très simple, le `loop()` du robot est plus complexe. Il se découpeen trois partie,sous formes de conditions (`if`):
+- Une condition de gestin *d'erreur* (c'est à dire, si le robot ne reçoit pas de message).
+- Une condition d'analyse du message et d'execution des instructions de déplacement.
+- Et enfin la condition dont je vous parlez plus haut, l'envoi de la notification de fin de déplacement.
+
+#### On va commencer par s'intéresser à la première condition, la plus simple : Que se passe-t-ilsi aucun message n'est reçu ?
