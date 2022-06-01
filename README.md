@@ -286,7 +286,71 @@ bool moove(String id1, String id2, int delai)
 </br> **Voilà ! Notre objectif est enfin atteint, nous sommes capable de calculer des instructions de déplacement à partir des coordonnées d'un point A et d'un point B dans le boitier, puis d'envoyer ces instructions aux robots lorsque cela sont immobiles.**
 </br> J'attire votre attention sur le fait que c'est bien dans le boitier que nous faisons les calculs. Les robots ne font qu'exécuter les instructions qu'ils reçoiovent.
 </br> Désormais, il va être bien plus simple et plus *propre* de programmer les fonctionnalités de nos robots.
-#### Commençons par la plus simple des 3 : <code>TELECOMMAND()</code>
+#### Commençons par la plus simple des 3 : `TELECOMMAND()`
+La fonction TELECOMMAND permet d'envoyer une instruction de déplacement vers des coordonnées précises, un certain nombre de fois et vers un destinataire précis.
+</br> Elle va donc prendre 6 paramètres (*1 pour le destinataire (`"RA"` ou `"RB"`), 1 autre pour le nombre d'envoie et 4 autres pour les coordonnées (`const int x1, const int y1, const int x2, const int y2`)).
 
+<pre><code>void TELECOMMAND(String destinataire, const int nombre_iteration, const int x1, const int y1, const int x2, const int y2)
+{
+  if (compteur_telecommand <= nombre_iteration)
+  {
+    envoyer(destinataire + coord(x1,y1,x2,y2), 300);
+    compteur_telecommand++;
+  }
+}
+</pre></code>
+
+#### La deuxième que nous allons voir est légèrement plus complexe : `EXPLORATION()`
+La fonction EXPLORATION fait se déplacer les deux robots en zigzag pour qu'ils couvrent toute une zone.
+<br/>On veut qu'une fois sur deux, le robot se déplace jusqu'à la coordonnée `(0,y)`, puis ensuite `(10,y)`.
+<br/>Cela va avoir pour effet de le faire se déplacer un zigzag. On va donc s'interresser à la parité de `y` pour réaliser cette alternance un certain nombre de fois (`repeat`).
+
+<pre><code>void EXPLORATION()
+{
+  // nombre de répétitions de la boucle
+  const int repeat = 10;
+  
+  while (y < repeat)
+  {
+    // on déclare un booléen (m_bot) qui contient la valeur renvoyé par la fonction moove avec les paramètres (id1 = RA, id2 = RB, delai = 1,2s).
+    bool m_bot = moove("RA", "RB", 1200);
+    Serial.println(m_RA);
+    Serial.println(y);
+    delay(500);
+
+    // dans le cas où y est un nombre pair, inférieure au nombre de répétition et que les deux robots sont prêts à reçevoir des commandes.
+    if (y%2==0 and y < repeat and m_bot == false)
+    {
+      Serial.println("MARQUEUR DE PASSAGE PAIR 0");
+      envoyer("RA" + coord(coord_RA[0], coord_RA[1], 0, y),300);
+      Serial.println("MARQUEUR DE PASSAGE PAIR 1");
+      coord_RA[0] = 0;
+      coord_RA[1] = y;
+      
+      envoyer("RB" + coord(coord_RB[0], coord_RB[1], 11, y),300);
+      coord_RB[0] = 11;
+      coord_RB[1] = y;
+
+      y++;
+    }
+
+    // même cas que pour le if mais avec y impair
+    else if (y%2!=0 and y < repeat and m_bot == false)
+    {
+      Serial.println("MARQUEUR DE PASSAGE IMPAIR 0");
+      envoyer("RA" + coord(coord_RA[0], coord_RA[1], 10, y), 300);
+      Serial.println("MARQUEUR DE PASSAGE IMPAIR 1");
+      coord_RA[0] = 10;
+      coord_RA[1] = y;
+
+      envoyer("RB" + coord(coord_RB[0], coord_RB[1], 19, y), 300);
+      coord_RB[0] = 19;
+      coord_RB[1] = y;
+
+      y++;
+    }
+  }
+}
+</pre></code>
 
 
