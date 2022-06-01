@@ -131,8 +131,65 @@ Lorsqu'il sera necessaire d'additionner les déplacements les uns derrière les 
 <br/>, Ainsi, avec ce mode de fonctionnement, les robots n'aurons qu'à tourner sur eux-même le même nombre de fois dans un sens comme dans l'autre pour maintenir une orientation corecte (*puisque un virage sera foncément un quart de tour, plus de problème d'addition d'angles*).
 
 #### Maintenant nous pouvons passer à la deuxième question : Sous quelle forme devront être envoyé ces informations ?
-Ici il est plus rapide de répondre. LoRa peut envoyer des messages sous forme de chaine de caractère (`String`). Même si la communication est enfaite coder en hexadécimal, ici on peut considérer que la l'on envoie et l'on reçoit des chaines de caractères.
-</br> On va donc envoyer les instruction sous la forme suivante :
+Ici il est plus rapide de répondre. LoRa peut envoyer des messages sous forme de chaine de caractère (`String`). Même si la communication est enfaite coder en hexadécimal, ici on peut considérer que l'on envoie et que l'on reçoit des chaines de caractères.
+</br> On va donc envoyer les instruction sous la forme suivante : `d001a010g002a199`, c'est à dire dans cet exemple:
+- tourner à droite 1 fois
+- avancer de 10
+- tourner à gauche 2 fois
+- avancer de 199
+
+#### Passons à la programmation.
+Cette fonction permet de calculer les déplacements que doivent accomplir les robots en fonction des coordonnées de départs et des coordonnées d'arrivées.
+</br> Elle retourne le message a envoyer de la forme => "directionXXXdirectionXXXdirectionXXX...". exemple : a001d012a014g158", 
+avec a pour avancer, d pour tourner à droite, g pour reculer.
+</br> Les robots sont aussi capable de reculer, mais cette fonctionalité n'est pas utiliser dans le projet.
+
+<pre><code>
+String coord(int x1, int y1, int x2, int y2)
+{
+  String msg = "";
+
+    if (x1 > x2)
+    {
+      msg = "" + instruction(msg, "g", 1);
+      msg = "" + instruction(msg, "a", abs(x1-x2));
+      msg = "" + instruction(msg, "d", 1);
+    }
+
+    if (x1 < x2)
+    {
+      msg = "" + instruction(msg, "d", 1);
+      msg = "" + instruction(msg, "a", abs(x1-x2));
+      msg = "" + instruction(msg, "g", 1);
+    }
+
+    if (y1 > y2)
+    {
+      msg = "" + instruction(msg, "d", 2);
+      msg = "" + instruction(msg, "a", abs(y1-y2));
+      msg = "" + instruction(msg, "d", 2);
+    }
+
+    if (y1 < y2)
+    {
+      msg = "" + instruction(msg, "a", abs(y1-y2));
+    }
+
+    if (x1 == x2 and y1 == y2)
+    {
+    }
+
+    return msg;
+}
+</pre></code>
+
+La logoque est la suivante : on imagime que *l'arène* est divisée en 4 parties. On imagine (comme sur le dessin ci-dessous) le robot au milieu de l'arène au point de coordonnées (x1,y1), 
+- le coin supérieur droit correspond à des coordonnées x2 et y2 supérieures au coordonnées de départ (x1 et y1).
+- le coin inférieure gauche correspond à l'exact opposé, c'est à dire des coordonnées en x2 et y2 inférieures aux coordonnées de départ.
+- pour le coin inférieur droit, on a x2 qui est supérieur à x1 mais y2 et inférieur à y1.
+- et pour le dernier coin, supérieur gauche, on a x2 qui est inférieur à x1 et y2 qui est supérieur à y1.
+
+Ainsi, on va comparer les différents points de coordonnées pour *localiser* la zone de la destination et pour se placer sur un point précis dans cette zone, on va calculer la différence entre les abscisses x1 et x2 et les ordonnées y1 et y2, ce qui va indiquer sur la distance du déplacement vertical et horizontal.
 
 
 
