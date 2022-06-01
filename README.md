@@ -353,4 +353,52 @@ La fonction EXPLORATION fait se déplacer les deux robots en zigzag pour qu'ils 
 }
 </pre></code>
 
+#### La dernière fonctionnalité est très simple à comprendre surtout lorsqu'on a compris EXPLORATION : il s'agit de `RANDOM()`
+Cette fonction est construite un peu comme la fonction EXPLORATION.
+<br/>Elle permet de générer des coordonnées aléatoire pour les deux robots et de les envoyer, tout cela un certain nombre de fois.
+
+<pre><code>void RANDOM()
+{
+  const int repeat = 10;
+  const int a = 0;
+  const int b = 20;
+  
+  while (y < repeat)
+  {
+    bool m_bots = moove("RA", "RB", 1200);
+    Serial.println(m_bots);
+    Serial.println(y);
+    delay(500);
+    
+    if (y < repeat and m_bots == false)
+    {
+      int coord_xa = alea(a,b);
+      int coord_ya = alea(a,b);
+      envoyer("RA" + coord(coord_RA[0], coord_RA[1], coord_xa, coord_ya),300);
+      coord_RA[0] = coord_xa;
+      coord_RA[1] = coord_ya;
+
+      int coord_xb = alea(a,b);
+      int coord_yb = alea(a,b);
+      envoyer("RB" + coord(coord_RB[0], coord_RB[1], coord_xb, coord_yb),300);
+      coord_RB[0] = coord_xb;
+      coord_RB[1] = coord_yb;
+
+      y++;
+    }
+  }
+}
+</pre></code>
+
+Vous remarquerez ici aussi l'utilisation d'une fonction que je n'ai pas décrite : `alea()`, qui prend 2 paramètres `a` et `b`, deux entiers.
+<br/> Cette fonction permet de générer un nombre aléatoire entre a et b. On va donc générer en tout 2 nombres aléatoirement qui vont composer les coordonnées de la destination des robots.
+
+<pre><code>
+int alea( int a, int b)
+{
+  int n_alea ;
+  n_alea = a + (int)((float)rand() * (b-a+1) / (RAND_MAX-1)) ;
+  return n_alea;
+}</pre></code>
+
 
