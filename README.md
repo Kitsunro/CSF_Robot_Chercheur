@@ -183,13 +183,76 @@ String coord(int x1, int y1, int x2, int y2)
 }
 </pre></code>
 
-La logoque est la suivante : on imagime que *l'arène* est divisée en 4 parties. On imagine (comme sur le dessin ci-dessous) le robot au milieu de l'arène au point de coordonnées (x1,y1), 
+La logique est la suivante : on imagime que *l'arène* est divisée en 4 parties. On imagine (comme sur le dessin ci-dessous) le robot au milieu de l'arène au point de coordonnées (x1,y1), 
 - le coin supérieur droit correspond à des coordonnées x2 et y2 supérieures au coordonnées de départ (x1 et y1).
 - le coin inférieure gauche correspond à l'exact opposé, c'est à dire des coordonnées en x2 et y2 inférieures aux coordonnées de départ.
 - pour le coin inférieur droit, on a x2 qui est supérieur à x1 mais y2 et inférieur à y1.
 - et pour le dernier coin, supérieur gauche, on a x2 qui est inférieur à x1 et y2 qui est supérieur à y1.
 
 Ainsi, on va comparer les différents points de coordonnées pour *localiser* la zone de la destination et pour se placer sur un point précis dans cette zone, on va calculer la différence entre les abscisses x1 et x2 et les ordonnées y1 et y2, ce qui va indiquer sur la distance du déplacement vertical et horizontal.
+
+![](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/Schema-fonction-coord().jpg)
+
+#### On peut désormais se concentrer sur la dernière de nos 5 questions
+Enfin nous y sommes. Après ça nous aurons notre base : **des robots qui se déplacent d'un point A à un point B**. Une fois que cela sera fait, le reste semblera beaucoup plus facile.
+</br> **Comment pouvons nous être notifié que les robots ont arrêté de se déplacer et sont prêts à recevoir de nouvelles instructions ?**
+</br> Une solution serait de programmer une sorte de *notification de fin de déplacement*. Pour faire cela, il va falloir parler un peu des codes des robots. Sans entrer dans le détail (nous le verrons après), les robots vont fonctionner selon ces étapes :
+1. Ecouter les éventuelles messages qu'ils pourraient recevoir.
+  - Dans le cas où ils ne recoivent rien, le message est égal à `Pas de message`.
+  - Dans le cas où ils recoivent un message, le message est égal à la chaine de caractère (`String`) qui a été reçu.
+2. Vérifier si le message est bien destiné au robot qui la reçu.
+  - Etant donné que tout notre système va émettre sur la même fréquence (ce qui est la principale faiblesse du projet), il va falloir faire le tri dans ce qui arrive aux *oreilles* de nos petits robots.
+3. Exécuter les instructions du message reçu.
+4. Renvoyer un message à destination du boitier central signalant la fin des déplacements(immobilité) du robot en question (c'est à dire *signé* ce message)
+
+</br> Nous allons donc programmer une fonction qui devra renvoyer une valeur précise (un booléen par exemple) si les **deux** robots sont immobiles.
+On appelle cette fonction `moove` (`bool moove(String id1, String id2, int delai)`).
+
+<pre><code>
+/*
+ * Fonction moove, retourne false si les deux robots sont prêt à recevoir une commande.
+ */
+bool moove(String id1, String id2, int delai)
+{
+  // On utilise millis pour compter le temps entre deux mesure
+  unsigned long Time1 = millis();
+  float past = 0;
+  bool state_id1;
+  bool state_id2;
+  
+  while (past<delai)
+  {
+    unsigned long Time2 = millis();
+    past = Time2 - Time1;
+    
+    String notif_fin = message_recu();
+    Serial.println();
+    Serial.print("message_notif dans le moove                       : ");
+    Serial.println(notif_fin);
+
+    // si on reçoit la notification de fin du robot id1
+    if (notif_fin == id1 + "fini")
+    {
+      state_id1 = false;
+    }
+
+    // si on reçoit la notification de fin du robot id2
+    if (notif_fin == id2 + "fini")
+    {
+      state_id2 = false;
+    }
+
+    // dans le cas où l'on n'a pas reçu une notif de fin des deux robots, les états des deux robots sont à vrai
+    else
+    {
+      state_id1 = true;
+      state_id2 = true;
+    }
+
+    // on retourne vrai dans tous les cas sauf celui où les deux notifs sont reçus (table de vérité du ou logique).
+    return state_id1 or state_id2;
+  }
+}</pre></code>
 
 
 
