@@ -108,4 +108,25 @@ Le `loop`, autrement dit la boucle infinie que va exécuter la carte est extrêm
 
 Vous pouvez voir les trois fonctionnalités `EXPLORATION` `RANDOM` et `TELECOMMAND`. **Elles sont toutes les trois en commentaire donc si vous lancer le programme tel quel, rien ne se passera**.
 
-##### Nous venons de voir toutes la partie *initialisation* du programme du boitier
+##### Nous venons de voir toutes la partie *initialisation* du programme du boitier. Désormais il nous faut nous pencher sur la partie *fonctionnement*.
+
+Le boitier peut commander 3 fonctions différentes, mais pour l'instant n'oublions pas que nous voulons seulement répondre à la question :
+> Comment être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'un point B dans le boitier, puis d"envoyer ces instructions aux robots lorsque celà sont immobiles ?
+Pour faire celà, il faut répondre à plusieurs questions préalables :
+1. Selon quelle logique les robots vont-ils se déplacer d'un point A vers un point B ?
+2. Comment mettre en place un algorithme simple réalisant ce calcul ?
+3. Sous quelle forme les instructions doivent-elles être envoyés aux robots ?
+4. Comment être au courant que les robots sont immobiles et ainsi que les informations peuvent être envoyées ?
+
+### Commençons par répondre à la première question.
+Dans un premier temps, on pourrait dire que par soucis d'efficacité les robots vont se déplacer en lignes droites du point de départ jusqu'au point d'arrivé. Cependant, ça soulève un problème : il faudra gérer des angles et des calculs trigonométriques qui vont complexifier l'instruction à envoyé.
+Il existe une autre solution plus rapide et plus simple à mettre en place : un déplacement en escalier.
+Dans ce cas, la seule information à connaitre est la valeur absolu de la différence entre l'abscice du point A et du point B et la valeur absolu de la différence entre l'ordonnée du point A et du point B. Les robots se déplaceront donc selon cette logique :
+![]()
+
+Les robots devront donc pourvoir avancer, tourner à gauche et tourner à droite un certain nombre de fois. Ainsi, une simple combinaison de virage à gauche ou à droite de 90 degrés et d'avancé tout droit permettra d'arriver à destination à tout les coups.
+De plus, ilsera aisé de maintenir une même orientation des robots à la fin de leurs déplacements, je m'explique.
+Lorsqu'il sera necessaire d'additionner les déplacements les uns derrière les autres (*par exemple en allant d'un point A, à un point B, à un point C ect*), un robot devra toujours terminer son déplacement das la même *orientation* qu'au départ. C'est à dire que s'il commence à se déplacer en *regardant* vers le haut, il devra finir son déplacement en *regardant* vers le haut. Sinon, au fil des itérations, les robots n'ayant aucune conscience de leurs *présences dans l'espace*, ceux-ci vont se décaler et ce décallage, comme vous pouvez l'imaginer, faussera tout le processus.
+<br/>, Ainsi, avec ce mode de fonctionnement, les robots n'aurons qu'à tourner sur eux-même le même nombre de fois dans un sens comme dans l'autre pour maintenir une orientation corecte (*puisque un virage sera foncément un quart de tour, plus de problème d'addition d'angles*).
+
+
