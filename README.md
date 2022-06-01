@@ -115,9 +115,9 @@ Le boitier peut commander 3 fonctions différentes, mais pour l'instant n'oublio
 
 Pour faire celà, il faut répondre à plusieurs questions au préalable :
 1. Selon quelle logique les robots vont-ils se déplacer d'un point A vers un point B ?
-2. Comment mettre en place un algorithme simple réalisant ce calcul ?
-3. Sous quelle forme les instructions doivent-elles être envoyés aux robots ?
-4. Comment être au courant que les robots sont immobiles et ainsi que les informations peuvent être envoyées ?
+2. Sous quelle forme les instructions doivent-elles être envoyés aux robots ?
+3. Comment mettre en place un algorithme simple réalisant ce calcul ?
+5. Comment être au courant que les robots sont immobiles et ainsi que les informations peuvent être envoyées ?
 
 #### Commençons par répondre à la première question.
 Dans un premier temps, on pourrait dire que par soucis d'efficacité les robots vont se déplacer en lignes droites du point de départ jusqu'au point d'arrivé. Cependant, ça soulève un problème : il faudra gérer des angles et des calculs trigonométriques qui vont complexifier l'instruction à envoyé.
@@ -129,5 +129,10 @@ Les robots devront donc pourvoir avancer, tourner à gauche et tourner à droite
 De plus, ilsera aisé de maintenir une même orientation des robots à la fin de leurs déplacements, je m'explique.
 Lorsqu'il sera necessaire d'additionner les déplacements les uns derrière les autres (*par exemple en allant d'un point A, à un point B, à un point C ect*), un robot devra toujours terminer son déplacement das la même *orientation* qu'au départ. C'est à dire que s'il commence à se déplacer en *regardant* vers le haut, il devra finir son déplacement en *regardant* vers le haut. Sinon, au fil des itérations, les robots n'ayant aucune conscience de leurs *présences dans l'espace*, ceux-ci vont se décaler et ce décallage, comme vous pouvez l'imaginer, faussera tout le processus.
 <br/>, Ainsi, avec ce mode de fonctionnement, les robots n'aurons qu'à tourner sur eux-même le même nombre de fois dans un sens comme dans l'autre pour maintenir une orientation corecte (*puisque un virage sera foncément un quart de tour, plus de problème d'addition d'angles*).
+
+#### Maintenant nous pouvons passer à la deuxième question : Sous quelle forme devront être envoyé ces informations ?
+Ici il est plus rapide de répondre. LoRa peut envoyer des messages sous forme de chaine de caractère (`String`). Même si la communication est enfaite coder en hexadécimal, ici on peut considérer que la l'on envoie et l'on reçoit des chaines de caractères.
+</br> On va donc envoyer les instruction sous la forme suivante :
+
 
 
