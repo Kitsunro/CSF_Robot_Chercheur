@@ -10,7 +10,7 @@ Ce projet est une introduction à la robotique en essaim. Cette branche de la ro
 ### Principe du projet
 La problématique du projet est la suivante : *Comment concevoir un système répondant aux grands principes de la robotique en essaim tout en étant capable d’être facilement amélioré ?*
 Dans ce projet, nous nous intéressons particulièrement à la gestion de plusieurs robots. Chaque individu de l’essaim est une copie simpliste des autres.
-Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le plus vite possible cet espace (je vous mets [ici](https://drive.google.com/file/d/10Sv5LFDInEuWgBz5xsBcA-xMS80MSWDF/view?usp=sharing) un exemple du mode EXPLORATION mais avec 1 seul robot).
+Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le plus vite possible cet espace (je vous mets [ici](https://drive.google.com/file/d/10Sv5LFDInEuWgBz5xsBcA-xMS80MSWDF/view?usp=sharing) un exemple du mode EXPLORATION mais avec 1 seul robot et [là](https://drive.google.com/file/d/1m_GNZOg0WN5ZQZCzkGJclVHw34E2hNWF/view?usp=sharing) le mode RANDOM avec 2 robots).
 <br/>On rajoutera aussi une fonctionnalité télécommande et une fonctionnalité de déplacement au hasard que je décrirai plus bas.
 
 
