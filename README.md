@@ -34,6 +34,7 @@ Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le 
 Commençons par imprimer en 3d le modèle du boitier qui acceuillera les robots par la suite.
 Pour cela, vous pouvez télécharger le [modèle 3d](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/Boitier1.STL) présent sur le github ou confectionner le votre.
 ![](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/Capture%20d%E2%80%99%C3%A9cran%202022-05-30%20185653.png)
+![](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/IMG_1655_1_.jpg)
 
 #### Etape 2 :
 Ensuite nous allons passer au montage du projet, c'est à dire que nous allons assembler nos différents éléments pour composer les robots.
