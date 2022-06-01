@@ -5,13 +5,13 @@ Ce projet est réalisé dans le cadre de l'UE Communication Sans Fil au cours de
 
 ## Description du projet
 ### Contexte
-Ce projet est une introduction à la robotique en essaim. Cette branche de la robotique a pour but de concevoir des systèmes plus ou moins intelligents composés de plusieurs individus simplistes. C’est par la communication et l’effet de groupe, tout ça en étant régis par des règles simples, que l’essaim va se comporter intelligemment.
+Ce projet est une introduction à la robotique en essaim. Cette branche de la robotique a pour but de concevoir des systèmes plus ou moins intelligents composés de plusieurs individus simplistes.
+<br/>C’est par la communication et l’effet de groupe, tout ça en étant régis par des règles simples, que l’essaim va se comporter intelligemment.
 
 ### Principe du projet
 La problématique du projet est la suivante : *Comment concevoir un système répondant aux grands principes de la robotique en essaim tout en étant capable d’être facilement amélioré ?*
-Dans ce projet, nous nous intéressons particulièrement à la gestion de plusieurs robots. Chaque individu de l’essaim est une copie simpliste des autres.
-Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le plus vite possible cet espace (je vous mets [ici](https://drive.google.com/file/d/10Sv5LFDInEuWgBz5xsBcA-xMS80MSWDF/view?usp=sharing) un exemple du mode EXPLORATION mais avec 1 seul robot et [là](https://drive.google.com/file/d/1m_GNZOg0WN5ZQZCzkGJclVHw34E2hNWF/view?usp=sharing) le mode RANDOM avec 2 robots).
-<br/>On rajoutera aussi une fonctionnalité télécommande et une fonctionnalité de déplacement au hasard que je décrirai plus bas.
+<br/>Dans ce projet, nous nous intéressons particulièrement à la gestion de plusieurs robots. Chaque individu de l’essaim est une copie simpliste des autres.
+<br/>Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le plus vite possible cet espace, on rajoutera aussi une fonctionnalité télécommande et une fonctionnalité de déplacement au hasard que je décrirai plus bas : je vous mets [ici](https://drive.google.com/file/d/10Sv5LFDInEuWgBz5xsBcA-xMS80MSWDF/view?usp=sharing) un exemple du mode EXPLORATION mais avec 1 seul robot et [là](https://drive.google.com/file/d/1m_GNZOg0WN5ZQZCzkGJclVHw34E2hNWF/view?usp=sharing) le mode RANDOM avec 2 robots.
 
 
 ## Fabrication
@@ -24,19 +24,20 @@ Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le 
 - [Roues pour les servomoteurs](https://www.gotronic.fr/art-roue-pour-servomoteur-fs90r-25856.htm)
 - Fils de connexions
 - Breadboard
+- batterie 3,3V (attention, en fonction de la carte utilisé)
 
 #### Pour le boitier de commande :
 - Carte [UCA](https://github.com/FabienFerrero/UCA21) ou [carte Arduino](https://www.gotronic.fr/art-carte-arduino-nano-12422.htm) (NANO ou UNO)
 - Si vous utiliser une carte arduino il vous faudra un module de [communication LoRa](https://www.gotronic.fr/art-shield-firebeetle-lora-tel0121-27836.htm).
 
 ### Construction des robots
-#### Etape 1 :
+#### Étape 1 :
 Commençons par imprimer en 3d le modèle du boitier qui acceuillera les robots par la suite.
 Pour cela, vous pouvez télécharger le [modèle 3d](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/Boitier1.STL) présent sur le github ou confectionner le votre.
 ![](https://github.com/Kitsunro/CSF_Robot_Chercheur/blob/main/Impression3D/Capture%20d%E2%80%99%C3%A9cran%202022-05-30%20185653.png)
 ![](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/IMG_1655_1_.jpg)
 
-#### Etape 2 :
+#### Étape 2 :
 Ensuite nous allons passer au montage du projet, c'est à dire que nous allons assembler nos différents éléments pour composer les robots.
 Je précise que vous pouvez construire autant de robots que vous le voulez, le programme étant sensiblement le même pour chacun des robots, la gestion de plusieurs robots se fera surtout dans le programme du boitier central, mais nous verrons ça tout à l'heure.
 Commençons l'assemblage.
@@ -50,7 +51,7 @@ Nous allons commencer par coller les deux servomoteurs FS90R sur les deux emplac
 Une fois que les servos sont collés, il faut viser les roues. Attention, ne forcez pas trop pour viser, vous risquez de decoller le servos du support.
 ##### Voilà ! Vous avez un robot prêt a être programmé. Nous allons donc pouvoir passer à cette deuxième partie : le code.
 
-#### Etape 3 :
+#### Étape 3 :
 Nous allons maintenent coder les robots et le boitier de contrôle. C'est ici que réside le gros du travail mais pas de panique, nous allons détaillé tout ça, pas à pas.
 Nous voulons être en mesure de commander deux robots identiques avec un boitier. Ces robots vont évoluer (par soucis de simplicité) dans une zone d'1 mètre carré quadrillée d'un repère orthonormé où 1 unité vaut 5cm.
 Ainsi, les robots se déplaceront d'une point A vers un point B. **Nous tenons là notre premier objectif, il nous faut être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'une point B dans le boitier, puis d'envoyer ces instructions aux robots lorsque cela sont immobiles.**
