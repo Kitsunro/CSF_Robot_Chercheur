@@ -507,3 +507,79 @@ const int quart_de_tour = 250;
 - Et enfin la condition dont je vous parlez plus haut, l'envoi de la notification de fin de déplacement.
 
 #### On va commencer par s'intéresser à la première condition, la plus simple : Que se passe-t-ilsi aucun message n'est reçu ?
+<br/>Si on reprend le code de la fonction `message_recu()`, on  se rend vite compte qu'elle renvoi `None` s'il n'y a pas de message reçu. On a donc :
+
+<pre><code>if (message == "None")
+  {
+    Serial.println("Pas de message");
+    Serial.println();
+  }
+  </pre></code>
+  
+  #### Mainteant, par rapport à la deuxième partie de cette boucle infini :
+  <br/>Il y a plusieurs étapes (que l'on a déjà survolé d'ailleurs) avec d'executer les instructions.
+  <br/>Il faut vérifier si le message est bien destiné à ce robot (ici le *robot A*). Ensuite il faut parcourir la chaine de  caractère reçc et en tirer les bonnes informations, c'est à dire :
+  - la direction (avancer si c'est `a`, tourner à droite si c'est `d` ou à gauche si c'est `g`).
+  - le nombre d'itération.
+  
+<br/>Et c'est pour cette dernière qu'un problème se pose. Le message reçu, commeje l'ai dit plusieurs fois, est une chaine de caractère. Or, nous avons besoin d'avoir un entier (`int`).
+<br/>Pour résoudre ce problème nous allons utiliser la fonction `toInt()` qui prend un nombre en chaine de caractère `String` et qui le convertit en entier `int`. Mais voyons plutôt tout cela avec le code :
+
+<pre><code>/* 
+   *  dans le cas où le message est recu, que les deux premiers caractères correspondent
+   *  à l'id du robot et que start est vrai (or start est faux pas défaut).
+   */
+  else if (message[0] == id[0] and message[1] == id[1] and start)
+  {
+    go_robot = false;
+    Serial.print("message : ");
+    Serial.println(message);
+    Serial.println();
+
+    // pour chaque caractère du message et tant que le booléen go_robot est faux
+    for (int i=2; i<message.length() and go_robot==false; i++)
+    {
+      Serial.println(message[i]);
+
+     // si le caractère d'indice i du message est égale à "a"
+     if (message[i] == 'a')
+     {
+      /* 
+       *  on isole la partie de la chaine qui correspond au nombre d'itération de la fonction avancé grâce à la fonction concatenation.
+       *  On affecte cette valeur à la variable n_avance. Ensuite on convertit cette String en entier (int) avec la fonction toInt. On se retrouve donc            *  avec
+       *  la variable n_avancer_int qui correspond à l'entier, paramètre du nombre d'itération de la fonction avancer. 
+      */
+      String n_avance = concatenation(i+1,i+3,message);
+      int n_avance_int = n_avance.toInt();
+      avancer(n_avance_int);
+      delay(300);
+     }
+     
+      // selon le même procédé que pour avancer.
+     if (message[i] == 'd')
+     {
+      String n_droite = concatenation(i+1,i+3,message);
+      int n_droite_int = n_droite.toInt();
+      tourne_droit(n_droite_int);
+      delay(300);
+     }
+     
+       // selon le même procédé que pour avancer.
+     if (message[i] == 'g')
+     {
+      String n_gauche = concatenation(i+1,i+3,message);
+      int n_gauche_int = n_gauche.toInt();
+      tourne_gauche(n_gauche_int);
+      delay(300);
+     }
+    }
+    /* 
+     *  une fois qu'on sort de la boucle for, on fait passer go_robot à vrai.
+     *  Ainsi, tant que go_robot ne repasse pas à faux, le robot ne peut plus se déplacer.
+     */
+    delay(1000);
+    go_robot=true;
+  }
+      </pre></code>
+
+  
