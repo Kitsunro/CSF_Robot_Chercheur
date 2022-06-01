@@ -715,4 +715,9 @@ Il manque une condition qui n'a pas été explicité mais qui n'est pas très co
 - on *rentre* dedans si `message=="GO`.
 - si les deux booléens `start`et `go_robot` sont vrais.
 <br/>Or, on défini `start` comme `false` au début (*phase d'initialisation des variables*) et le seul moyen que `start` passe et **reste** à `true` est de *rentrer* dans la condition.
-<br/>
+<br/>Ainsi, lors du premier passage dans le `loop()` il est **nécessaire** que le boitier envoie `"GO3"` pour que le robot puisse commencer ses déplacements.
+
+### Conclusion
+Nous venons de voir en long, en large et en travers comment faire correctement marcher ce projet. Comme vous avez pu le comprendre, le gros du travail réside dans la programmation du système.
+<br/>Tous le projet a été imaginé  pour rendre simple l'amélioration des différentes fonctionnalités (robot similaire, programmation sous forme de blocs...).
+<br/>Enfin, cet *essaim de robot* essaie de se tenir au plus proche des grands principes de la pationnante robotique en essaim. 
