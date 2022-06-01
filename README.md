@@ -50,7 +50,7 @@ Une fois que les servos sont collés, il faut viser les roues. Attention, ne for
 #### Etape 3 :
 Nous allons maintenent coder les robots et le boitier de contrôle. C'est ici que réside le gros du travail mais pas de panique, nous allons détaillé tout ça, pas à pas.
 Nous voulons être en mesure de commander deux robots identiques avec un boitier. Ces robots vont évoluer (par soucis de simplicité) dans une zone d'1 mètre carré quadrillée d'un repère orthonormé où 1 unité vaut 5cm.
-Ainsi, les robots se déplaceront d'une point A vers un point B. **Nous tenons là notre premier objectif, il nous faut être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'une point B dans le boitier, puis d"envoyer ces instructions aux robots lorsque celà sont immobiles.**
+Ainsi, les robots se déplaceront d'une point A vers un point B. **Nous tenons là notre premier objectif, il nous faut être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'une point B dans le boitier, puis d'envoyer ces instructions aux robots lorsque cela sont immobiles.**
 
 Pour résoudre ce problème nous allons mettre en place plusieurs fonctions que j'expliquerait plutard.
 ##### On commence par détailler le code du boitier. Certains bout de code ne sont compréhensible qu'en ayant connaissance du programme des robots, dans le cas échéant j'essairai d'expliquer au mieux le pourquoi du comment, mais tout s'éclaircira avec le programme des robots que l'on expliquera plus bas.
@@ -193,8 +193,8 @@ Ainsi, on va comparer les différents points de coordonnées pour *localiser* la
 
 ![](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/Schema-fonction-coord().jpg)
 
-** Vous aurez sûrement remarqué l'utilisation d'une fonction dont je n'ai pas encore parlé : `instruction`.
-</br> Cette fonction permettait de construire les instructions. Elle prend trois paramètres :
+Vous aurez sûrement remarqué l'utilisation d'une fonction dont je n'ai pas encore parlé : `instruction()`.
+</br> Cette fonction permet de construire les instructions. Elle prend trois paramètres :
 - la variable dans laquelle elle va *ranger* l'instruction sous forme de texte
 - l'action que le robot doit executer (avancer (a), tourner à gauche (g) ou tourner à droite (d)
 - le nombre de répétition à faire.
@@ -280,8 +280,13 @@ bool moove(String id1, String id2, int delai)
     // on retourne vrai dans tous les cas sauf celui où les deux notifs sont reçus (table de vérité du ou logique).
     return state_id1 or state_id2;
   }
-}</pre></code>
+}
+</pre></code>
 
+** Voilà ! Notre objectif est enfin atteint,nous sommes capable de calculer des instructions de déplacement à partir des coordonnées d'un point A et d'un point B dans le boitier, puis d'envoyer ces instructions aux robots lorsque cela sont immobiles.**
+</br> J'attire votre attention sur le fait que c'est bien dans le boitier que nous faisons les calculs. Les robots ne font qu'exécuter les instructions qu'ils reçoiovent.
+</br> Désormais, il va être bien plus simple et plus *propre* de programmer les fonctionnalités de nos robots.
+#### Commençons par la plus simple des 3 : `TELECOMMAND()`
 
 
 
