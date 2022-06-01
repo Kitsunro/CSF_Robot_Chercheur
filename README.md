@@ -193,6 +193,35 @@ Ainsi, on va comparer les différents points de coordonnées pour *localiser* la
 
 ![](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/Schema-fonction-coord().jpg)
 
+** Vous aurez sûrement remarqué l'utilisation d'une fonction dont je n'ai pas encore parlé : `instruction`.
+</br> Cette fonction permettait de construire les instructions. Elle prend trois paramètres :
+- la variable dans laquelle elle va *ranger* l'instruction sous forme de texte
+- l'action que le robot doit executer (avancer (a), tourner à gauche (g) ou tourner à droite (d)
+- le nombre de répétition à faire.
+Il faut comprendre que le plus complexe dans cette fonction est la gestion du nombre d'itération car en fonction du nombre d'unité (1 ou 10 ou 100), la chaîne de caractère ne sera pas construite pareil (*car je le rappel : l'information doit être de la forme direction1 puis 3 chiffres, direction2 puis à nouveau 3 chiffres et ainsi de suite*).
+
+<pre><code>String instruction(String msg, String action, int repeats_number)
+{
+  if (repeats_number >= 100)
+  {
+    msg = msg + action + repeats_number;
+    return msg;
+  }
+  
+  else if (repeats_number >= 10)
+  {
+   msg = msg + action + "0" + repeats_number;
+   return msg;
+  }
+  
+  else if (repeats_number < 10)
+  {
+    msg = msg + action + "00" + repeats_number;
+    return msg;
+  }
+}</pre></code>
+ 
+ 
 #### On peut désormais se concentrer sur la dernière de nos 5 questions
 Enfin nous y sommes. Après ça nous aurons notre base : **des robots qui se déplacent d'un point A à un point B**. Une fois que cela sera fait, le reste semblera beaucoup plus facile.
 </br> **Comment pouvons nous être notifié que les robots ont arrêté de se déplacer et sont prêts à recevoir de nouvelles instructions ?**
@@ -206,10 +235,9 @@ Enfin nous y sommes. Après ça nous aurons notre base : **des robots qui se dé
 4. Renvoyer un message à destination du boitier central signalant la fin des déplacements(immobilité) du robot en question (c'est à dire *signé* ce message)
 
 </br> Nous allons donc programmer une fonction qui devra renvoyer une valeur précise (un booléen par exemple) si les **deux** robots sont immobiles.
-On appelle cette fonction `moove` (`bool moove(String id1, String id2, int delai)`).
+On appelle cette fonction `moove`.
 
-<pre><code>
-/*
+<pre><code>/*
  * Fonction moove, retourne false si les deux robots sont prêt à recevoir une commande.
  */
 bool moove(String id1, String id2, int delai)
@@ -253,6 +281,7 @@ bool moove(String id1, String id2, int delai)
     return state_id1 or state_id2;
   }
 }</pre></code>
+
 
 
 
