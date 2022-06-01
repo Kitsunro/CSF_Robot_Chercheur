@@ -103,7 +103,7 @@ Plus tard, nous aurons besoin d'envoyer et de recevoir des messages (je m'étend
   unsigned long Time1 = millis();
   float past = 0;
   
-  while (past<delai)
+  while (past < delai)
   {
     unsigned long Time2 = millis();
     past = Time2 - Time1;
@@ -117,7 +117,7 @@ Plus tard, nous aurons besoin d'envoyer et de recevoir des messages (je m'étend
 }
 </pre></code>
 
-On remarque que la fonction prend 2 paramètres :
+<br/>On remarque que la fonction prend 2 paramètres :
 - `String msg` qui n'est autre que la chaine de caractère à envoyer
 - `int delai` qui correspond au temps durant lequel on va envoyer des packets (`LoRa.beginPacket();`)
 
@@ -154,6 +154,8 @@ On remarque que la fonction prend 2 paramètres :
   } 
 }
 </pre></code>
+
+#### Regardons rapidement le `loop()`
 
 Le `loop`, autrement dit la boucle infinie que va exécuter la carte est extrêment simple. On va seulement appeler les différentes fonctionnalités que l'on a programmer dans les fonctions que nous allons détailler par la suite. Je vous mets quand même le programme en bas pour montrer de quoi ça à l'air mais il n'y a rien de particulier à comprendre.
 <br/>Vous vous demandez peut-être à quoi sert la ligne `envoyer("GO", 500);`. C'est typiquement une partie compliqué à comprendre sans connaître le code des robots mais pour ne pas vous laissez complètement dans le brouillard, le boitier va envoyer "GO" au deux robots, ce qui leurs signalera que celui-ci est lancé et que le *jeu* commence. Ce sera en quelque sorte l'élément déclancheur qui permettra aux robots de rentrer par la suite dans les différentes boucles qui les feront fonctionner.
