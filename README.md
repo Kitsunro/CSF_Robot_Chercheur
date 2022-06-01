@@ -586,4 +586,20 @@ const int quart_de_tour = 250;
 -  d'abord `concatenation()` que je vais décrire juste après
 - puis par les fonctions dites de *contrôle des moteurs* (c'est à dire ou `avancer()`, ou `tourne_droit()` ou `tourne-gauche()`)
 
-<br/>
+<br/>Dans un premier temps, il faut isoler la partie du message reçu qui correspond aux instruction qui nous interesse;à savoir le nombre d'itération.
+C'est à qu'intervient la fonction `concatenation()` qui va simplement créer une nouvelle chaine à partir d'une chaine donné.
+<br/>Cette fonction prend 3 arguments : 
+- le premier correspond à l'indice du début de la partie de la chaine que l'on souhaite concaténer (pour l'isoler du reste)
+- le deuxière correspond à l'indice de fin 
+- et le dernier à la chaine que l'on souhaite traiter.
+
+Ainsi on a :
+<pre><code>String concatenation(int debut, int fin, String message)
+{
+  String msg = "";
+  for (int i = debut; i<=fin; i++)
+  {
+    msg.concat(message.charAt(i));
+  }
+  return msg;
+}</pre></code>
