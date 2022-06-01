@@ -10,6 +10,7 @@ Ce projet est une introduction à la robotique en essaim. Cette branche de la ro
 La problématique du projet est la suivante : *Comment concevoir un système répondant aux grands principes de la robotique en essaim tout en étant capable d’être facilement amélioré ?*
 Dans ce projet, nous nous intéressons particulièrement à la gestion de plusieurs robots. Chaque individu de l’essaim est une copie simpliste des autres.
 Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le plus vite possible cet espace.
+<br/>On rajoutera aussi une fonctionnalité télécommande et une fonctionnalité de déplacement au hasard que je décrirai plus bas.
 
 
 ## Fabrication
