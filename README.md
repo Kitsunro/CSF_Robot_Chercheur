@@ -123,7 +123,7 @@ Pour faire celà, il faut répondre à plusieurs questions au préalable :
 Dans un premier temps, on pourrait dire que par soucis d'efficacité les robots vont se déplacer en lignes droites du point de départ jusqu'au point d'arrivé. Cependant, ça soulève un problème : il faudra gérer des angles et des calculs trigonométriques qui vont complexifier l'instruction à envoyé.
 Il existe une autre solution plus rapide et plus simple à mettre en place : un déplacement en escalier.
 Dans ce cas, la seule information à connaitre est la valeur absolu de la différence entre l'abscice du point A et du point B et la valeur absolu de la différence entre l'ordonnée du point A et du point B. Les robots se déplaceront donc selon cette logique :
-![]([https://drive.google.com/file/d/1UlGR-1YCKlTT7HKeFufmIxqD9Gg4poaC/view?usp=sharing](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/Schema_logique_deplacement.png))
+![](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/Schema_logique_deplacement.jpeg)
 
 Les robots devront donc pourvoir avancer, tourner à gauche et tourner à droite un certain nombre de fois. Ainsi, une simple combinaison de virage à gauche ou à droite de 90 degrés et d'avancé tout droit permettra d'arriver à destination à tout les coups.
 De plus, ilsera aisé de maintenir une même orientation des robots à la fin de leurs déplacements, je m'explique.
