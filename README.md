@@ -20,8 +20,8 @@ Ainsi, nous faisons se déplacer dans une arène deux robots pour quadriller le 
 - 2 Servomoteur [FS90R](https://www.gotronic.fr/art-servomoteur-fs90r-25838.htm)
 - Boitier imprimer en 3d
 - [Roues pour les servomoteurs](https://www.gotronic.fr/art-roue-pour-servomoteur-fs90r-25856.htm)
-- fils de connexions
-- breadboard
+- Fils de connexions
+- Breadboard
 
 #### Pour le boitier de commande :
 - Carte [UCA](https://github.com/FabienFerrero/UCA21) ou [carte Arduino](https://www.gotronic.fr/art-carte-arduino-nano-12422.htm) (NANO ou UNO)
