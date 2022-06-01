@@ -464,4 +464,6 @@ int alea( int a, int b)
   return n_alea;
 }</pre></code>
 
-
+### Conclusion
+Nous venons de voir comment programmer le boitier central. Cependant il nous reste à comprendre comment faire pour que les deux robots soient en mesure d'exécuter correctement les instructions qu'ils reçoivent.
+<br/>
