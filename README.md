@@ -111,7 +111,7 @@ Vous pouvez voir les trois fonctionnalités `EXPLORATION` `RANDOM` et `TELECOMMA
 ##### Nous venons de voir toutes la partie *initialisation* du programme du boitier. Désormais il nous faut nous pencher sur la partie *fonctionnement*.
 
 Le boitier peut commander 3 fonctions différentes, mais pour l'instant n'oublions pas que nous voulons seulement répondre à la question :
-> Comment être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'un point B dans le boitier, puis d"envoyer ces instructions aux robots lorsque celà sont immobiles ?
+> Comment être capable de calculer des instructions de déplacement à partir des coordonnées d'un point A de départ et des coordonnées d'arrivées d'un point B dans le boitier, puis d"envoyer ces instructions aux robots lorsque cela sont immobiles ?
 
 Pour faire celà, il faut répondre à plusieurs questions préalables :
 1. Selon quelle logique les robots vont-ils se déplacer d'un point A vers un point B ?
