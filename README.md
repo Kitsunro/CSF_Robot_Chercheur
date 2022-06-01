@@ -696,3 +696,23 @@ void tourne_droit(int nombre_demi_tour)
   Serial.println(nombre_demi_tour);
   Serial.println();
 }</pre></code>
+
+<br/>Vous remarquerez qu'il y a une fonction `reculer()` alors que cette fonction n'est appelé nulle part. En effet elle ne sert à rien dans le programme, mais dans le cas où quelqu'un voudrait rajouter des fonctionnalités où il serait nécessaire de reculer, la fonction existe déjà.
+
+#### Pour terminer cette longue expliquation (oui oui ! c'est bientôt fini), revenons au `loop()`
+Il manque une condition qui n'a pas été explicité mais qui n'est pas très complexe : **la notification de fin**
+<br/>Celle-ci ressemble à ça :
+
+<pre><code>if (message == "GO" or (start and go_robot))
+  {
+    start = true;
+    go_robot = false;
+    envoyer(id + "fini", 800);
+  }</pre></code>
+  
+<br/>On peut voir que la condition d'entrée (en français) est : if le message que l'on a reçu est `"GO"`ou que les booléen `start` et `go_robot` sont vrais, alors...
+<br/>Cette condition se découpe en deux parties :
+- on *rentre* dedans si `message=="GO`.
+- si les deux booléens `start`et `go_robot` sont vrais.
+<br/>Or, on défini `start` comme `false` au début (*phase d'initialisation des variables*) et le seul moyen que `start` passe et **reste** à `true` est de *rentrer* dans la condition.
+<br/>
