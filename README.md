@@ -612,7 +612,7 @@ Ainsi on a :
  */
 void avancer(int nombre_tour)
 {
-  for (int i=1; i<=nombre_tour; i++)
+  for (int i=1; i <= nombre_tour; i++)
   {
     // on attache les moteurs 1 et 2 à leurs sorties respectives pour lancer la rotation
     servo1.attach(pin_servo1);
@@ -637,7 +637,7 @@ void avancer(int nombre_tour)
 void reculer(int nombre_tour)
 {
   
-  for (int i=1;i<=nombre_tour; i++)
+  for (int i=1;i <= nombre_tour; i++)
   {
     servo1.attach(pin_servo1);
     servo2.attach(pin_servo2);
@@ -660,7 +660,7 @@ void reculer(int nombre_tour)
 // Selon une logique semblable 
 void tourne_gauche(int nombre_demi_tour)
 {
-  for (int i=1;i<=nombre_demi_tour;i++)
+  for (int i=1;i <= nombre_demi_tour;i++)
   {
     servo1.attach(pin_servo1);
     servo2.attach(pin_servo2);
@@ -680,7 +680,7 @@ void tourne_gauche(int nombre_demi_tour)
 // Selon une logique semblable 
 void tourne_droit(int nombre_demi_tour)
 {
-  for (int i=1;i<=nombre_demi_tour;i++)
+  for (int i=1;i <= nombre_demi_tour;i++)
   {
     servo1.attach(pin_servo1);
     servo2.attach(pin_servo2);
