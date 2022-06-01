@@ -603,3 +603,96 @@ Ainsi on a :
   }
   return msg;
 }</pre></code>
+
+<br/>Quant aux autres fonctions, elle consiste seulement à controler les servomoteurs de façon à faire bouger le robot comme on le souhaite, je ne vais pas m'étendre sur le sujet, les commentaires se suffiront à eux même.
+<br/>Je vous mets tout de même un [lien](https://github.com/Kitsunro/CSF_Robot_Storm/blob/main/codes_tests/Contr%C3%B4ler%20un%20servomoteur%20avec%20une%20carte%20Arduino%20_%20Genuino.pdf) vers un pdf qui décrit avec précision la façon dont on peut utiliser un servomoteur à boucle ouverte comme le nôtre.
+
+<pre><code>/*
+ * Fonction avancer, prend en paramètre le nombre de tour (c'est à dire le nombre d'itération).
+ */
+void avancer(int nombre_tour)
+{
+  for (int i=1; i<=nombre_tour; i++)
+  {
+    // on attache les moteurs 1 et 2 à leurs sorties respectives pour lancer la rotation
+    servo1.attach(pin_servo1);
+    servo2.attach(pin_servo2);
+
+    // on fait faire 1 quart de tour aux deux servos DANS LE MEME SENS (d'ou le 1 et le 189)
+    servo1.write(1);
+    servo2.write(179);
+    delay(quart_de_tour);
+
+    // on les détache de leurs sorties respectives ce qui a pour effet de stopper la rotation
+    servo1.detach();
+    servo2.detach();
+
+  }
+  Serial.print("AVANCE DE : ");
+  Serial.println(nombre_tour);
+  Serial.println();
+}
+
+// Selon une logique semblable 
+void reculer(int nombre_tour)
+{
+  
+  for (int i=1;i<=nombre_tour; i++)
+  {
+    servo1.attach(pin_servo1);
+    servo2.attach(pin_servo2);
+    
+    // on fait faire 1 tour aux deux servos DABS LE MEME SENS (Inverse) (d'ou le 1 et le 189)
+    servo1.write(189);
+    servo2.write(1);
+    delay(quart_de_tour);
+    
+    // on les détache de leurs sorties respectives ce qui a pour effet de stopper la rotation
+    servo1.detach();
+    servo2.detach();
+  }
+  Serial.print("RECULE DE : ");
+  Serial.println(nombre_tour);
+  Serial.println();
+}
+
+
+// Selon une logique semblable 
+void tourne_gauche(int nombre_demi_tour)
+{
+  for (int i=1;i<=nombre_demi_tour;i++)
+  {
+    servo1.attach(pin_servo1);
+    servo2.attach(pin_servo2);
+
+    servo1.write(1);
+    servo2.write(1);
+    delay(demi_tour);
+
+    servo1.detach();
+    servo2.detach();
+  }
+  Serial.print("TOURNE A GAUCHE DE : ");
+  Serial.println(nombre_demi_tour);
+  Serial.println();
+}
+
+// Selon une logique semblable 
+void tourne_droit(int nombre_demi_tour)
+{
+  for (int i=1;i<=nombre_demi_tour;i++)
+  {
+    servo1.attach(pin_servo1);
+    servo2.attach(pin_servo2);
+
+    servo1.write(189);
+    servo2.write(189);
+    delay(demi_tour);
+
+    servo1.detach();
+    servo2.detach();
+  }
+  Serial.print("TOURNE A DROITE DE : ");
+  Serial.println(nombre_demi_tour);
+  Serial.println();
+}</pre></code>
